@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "incremental": true,
+        "strict": true,
+        "module": "ESNext",
+        "target": "ES2018",
+        "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
+        "tsBuildInfoFile": "./dist/buildFile.tsbuildinfo",
+        "skipLibCheck": true,
+        "newLine": "lf",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "outDir": "./dist",
+        "moduleResolution": "Node",
+        "noFallthroughCasesInSwitch": true,
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "listEmittedFiles": true
+    },
+    "include": ["./src/**/*.ts"],
+    "compileOnSave": true
+}

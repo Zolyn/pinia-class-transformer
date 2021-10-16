@@ -1,0 +1,38 @@
+{
+    "name": "decoratorDemo",
+    "version": "1.0.0",
+    "description": "",
+    "repository": "https://github.com/Zolyn/decoratorDemo.git",
+    "license": "MIT",
+    "author": "Zorin <zorin1477@gmail.com>",
+    "main": "index.js",
+    "scripts": {
+        "clean": "rm -rf ./dist",
+        "lint": "eslint ./src/**/*.ts ./src/*.ts",
+        "format": "prettier --write ./src/**/*.ts ./src/*.ts",
+        "depend": "dpdm ./src/**/*.ts ./src/*.ts --warning false",
+        "build": "yarn clean && yarn lint && yarn format && yarn depend && tsc",
+        "rel:ma": "standard-version -r major -n",
+        "rel:mi": "standard-version -r minor -n",
+        "rel:pa": "standard-version -r patch -n",
+        "prerel:a": "standard-version -p alpha -n",
+        "prerel:b": "standard-version -p beta -n",
+        "prerel:r": "standard-version -p rc -n",
+        "prepare": "husky install"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "12.1.4",
+        "@commitlint/config-conventional": "12.1.4",
+        "@release-it/conventional-changelog": "^3.3.0",
+        "@typescript-eslint/eslint-plugin": "^5.0.0",
+        "@typescript-eslint/parser": "^5.0.0",
+        "dpdm": "3.6.1",
+        "eslint": "7.27.0",
+        "eslint-config-alloy": "^4.4.0",
+        "husky": "6.0.0",
+        "lint-staged": "11.0.0",
+        "prettier": "2.3.0",
+        "sort-package-json": "1.50.0",
+        "typescript": "4.3.2"
+    }
+}
