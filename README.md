@@ -23,7 +23,7 @@ pnpm add pinia-store-decorators
 import { defineStore } from 'pinia';
 import { Store, Action, getOptions } from 'pinia-store-decorators';
 
-@Store('main')
+@Store
 class MainStore {
     public counter = 0;
 
@@ -43,7 +43,7 @@ class MainStore {
     }
 }
 
-export const useMainStore = defineStore(getOptions<'main', MainStore>(MainStore));
+export const useMainStore = defineStore(getOptions('main', new MainStore()));
 ```
 
 WIP..
