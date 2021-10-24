@@ -1,38 +1,55 @@
 {
-    "name": "decoratorDemo",
-    "version": "1.0.0",
-    "description": "",
-    "repository": "https://github.com/Zolyn/decoratorDemo.git",
+    "name": "pinia-store-decorators",
+    "version": "1.0.1",
+    "description": "Typescript Decorators to define Pinia stores.",
+    "repository": "https://github.com/Zolyn/pinia-store-decorators.git",
     "license": "MIT",
     "author": "Zorin <zorin1477@gmail.com>",
-    "main": "index.js",
+    "exports": {
+        ".": {
+            "import": "./dist/pinia-store-decorators.es.js",
+            "require": "./dist/pinia-store-decorators.cjs.js"
+        }
+    },
+    "main": "./dist/pinia-store-decorators.cjs.js",
+    "module": "./dist/pinia-store-decorators.es.js",
+    "types": "./dist/pinia-store-decorators.d.ts",
+    "typings": "./dist/pinia-store-decorators.d.ts",
+    "files": [
+        "dist/pinia-store-decorators.*.js",
+        "dist/pinia-store-decorators.*.js.map",
+        "dist/pinia-store-decorators.d.ts"
+    ],
     "scripts": {
         "clean": "rm -rf ./dist",
-        "lint": "eslint ./src/**/*.ts ./src/*.ts",
+        "build": "vite build && tsc",
+        "api": "api-extractor run",
         "format": "prettier --write ./src/**/*.ts ./src/*.ts",
-        "depend": "dpdm ./src/**/*.ts ./src/*.ts --warning false",
-        "build": "yarn clean && yarn lint && yarn format && yarn depend && tsc",
-        "rel:ma": "standard-version -r major -n",
-        "rel:mi": "standard-version -r minor -n",
-        "rel:pa": "standard-version -r patch -n",
-        "prerel:a": "standard-version -p alpha -n",
-        "prerel:b": "standard-version -p beta -n",
-        "prerel:r": "standard-version -p rc -n",
         "prepare": "husky install"
+    },
+    "dependencies": {
+        "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
         "@commitlint/cli": "12.1.4",
         "@commitlint/config-conventional": "12.1.4",
+        "@microsoft/api-extractor": "^7.18.16",
         "@release-it/conventional-changelog": "^3.3.0",
         "@typescript-eslint/eslint-plugin": "^5.0.0",
         "@typescript-eslint/parser": "^5.0.0",
-        "dpdm": "3.6.1",
         "eslint": "7.27.0",
         "eslint-config-alloy": "^4.4.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^3.4.0",
         "husky": "6.0.0",
         "lint-staged": "11.0.0",
         "prettier": "2.3.0",
         "sort-package-json": "1.50.0",
-        "typescript": "4.3.2"
+        "typescript": "4",
+        "vite": "^2.6.4"
+    },
+    "peerDependencies": {
+        "pinia": "^2.0.0-rc.14",
+        "vue": "^3.2.20"
     }
 }
