@@ -16,13 +16,6 @@ enum MetaDataKeys {
 type Func = (...args: any[]) => any;
 
 /**
- * 宽松的构造函数类型
- *
- * @public
- */
-type Constructor = new (...args: any[]) => any;
-
-/**
  * 返回对象O中，不能分配给T类型的键名
  *
  * @public
@@ -48,4 +41,4 @@ type Actions<C> = Omit<C, KeysNotExtends<C, Func>>;
  */
 type StatesAndGetters<C> = Pick<C, KeysNotExtends<C, Func>>;
 
-export { MetaDataKeys, Func, Constructor, KeysNotExtends, Actions, StatesAndGetters };
+export { MetaDataKeys, Func, KeysNotExtends, Actions, StatesAndGetters };
