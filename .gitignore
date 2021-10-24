@@ -12,3 +12,12 @@ pnpm-lock.yaml
 
 # Typescript
 *.tsbuildinfo
+
+# Vite
+.DS_Store
+dist
+dist-ssr
+*.local
+
+# api-extractor
+temp

@@ -1,5 +1,5 @@
 module.exports = {
-    extends: ['alloy', 'alloy/typescript'],
+    extends: ['alloy', 'alloy/typescript', 'plugin:prettier/recommended'],
     env: {
         node: true,
         browser: true,

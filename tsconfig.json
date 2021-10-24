@@ -10,6 +10,9 @@
         "newLine": "lf",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
+        "declaration": true,
+        "declarationMap": true,
+        "emitDeclarationOnly": true,
         "outDir": "./dist",
         "moduleResolution": "Node",
         "noFallthroughCasesInSwitch": true,
@@ -17,6 +20,5 @@
         "sourceMap": true,
         "listEmittedFiles": true
     },
-    "include": ["./src/**/*.ts"],
-    "compileOnSave": true
+    "include": ["./src/**/*.ts"]
 }
