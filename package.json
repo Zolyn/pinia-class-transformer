@@ -23,6 +23,7 @@
     "scripts": {
         "clean": "rm -rf ./dist",
         "build": "vite build && tsc",
+        "build:prod": "yarn build && yarn api",
         "api": "api-extractor run",
         "format": "prettier --write ./src/**/*.ts ./src/*.ts",
         "prepare": "husky install"
