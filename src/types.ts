@@ -4,8 +4,8 @@
  * @public
  */
 enum MetaDataKeys {
-    Actions = 'pinia-store-decorator:Actions',
-    StoreOptions = 'pinia-store-decorator:StoreOptions',
+    Actions = 'pinia-store-decorators:Actions',
+    StoreOptions = 'pinia-store-decorators:StoreOptions',
 }
 
 /**
