@@ -1,3 +1,9 @@
+## [1.0.4](https://github.com/Zolyn/pinia-store-decorators/compare/v1.0.2...v1.0.4) (2021-10-25)
+
+### Bug Fixes
+
+-   Fix type declarations
+
 ## [1.0.3](https://github.com/Zolyn/pinia-store-decorators/compare/v1.0.2...v1.0.3) (2021-10-25)
 
 ### Bug Fixes
