@@ -6,13 +6,13 @@ Typescript Decorators to define Pinia stores.
 
 ```shell
 # npm
-npm install pinia-store-decorators
+npm install -D pinia-store-decorators
 
 # yarn
-yarn add pinia-store-decorators
+yarn add -D pinia-store-decorators
 
 # pnpm
-pnpm add pinia-store-decorators
+pnpm add -D pinia-store-decorators
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ pnpm add pinia-store-decorators
 
 ```typescript
 import { defineStore } from 'pinia';
-import { Store, Action, getOptions } from 'pinia-store-decorators';
+import { Store, Action, createOptions } from 'pinia-store-decorators';
 
 @Store
 class MainStore {
@@ -43,7 +43,7 @@ class MainStore {
     }
 }
 
-export const useMainStore = defineStore(getOptions('main', new MainStore()));
+export const useMainStore = defineStore(createOptions('main', new MainStore()));
 ```
 
 WIP..
