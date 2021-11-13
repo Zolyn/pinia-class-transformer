@@ -21,7 +21,7 @@ pnpm add -D pinia-store-decorators
 
 ```typescript
 import { defineStore } from 'pinia';
-import { Store, Action, createOptions } from 'pinia-store-decorators';
+import { Store, createOptions } from 'pinia-store-decorators';
 
 @Store
 class MainStore {
@@ -37,13 +37,40 @@ class MainStore {
         return this.counter * 2 + 1;
     }
 
-    @Action
     public reset(): void {
         this.counter = 0;
     }
 }
 
-export const useMainStore = defineStore(createOptions('main', new MainStore()));
+export const useMainStore = defineStore(createOptions('main', MainStore));
 ```
 
-WIP..
+Equivalent to the code below
+
+```typescript
+import { defineStore } from 'pinia';
+
+const mainStore = {
+    state: () => ({
+        counter: 0,
+        name: 'Eduardo',
+    }),
+    getters: {
+        doubleCount(): number {
+            return this.counter * 2;
+        },
+        doubleCountPlusOne(): number {
+            return this.counter * 2 + 1;
+        },
+    },
+    actions: {
+        reset(): void {
+            this.counter = 0;
+        },
+    },
+};
+
+export const useMainStore = defineStore(mainStore);
+```
+
+WIP...
