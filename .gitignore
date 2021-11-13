@@ -21,3 +21,6 @@ dist-ssr
 
 # api-extractor
 temp
+
+# local env
+.env.local

@@ -25,9 +25,10 @@
         "build": "vite build && tsc",
         "build:prod": "yarn test && yarn build && yarn api",
         "api": "api-extractor run",
-        "test": "env TS_NODE_PROJECT=\"tsconfig.test.json\" mocha",
+        "test": "dotenv mocha",
         "format": "prettier --write ./src/**/*.ts ./src/*.ts",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "release": "dotenv -c local release-it --"
     },
     "dependencies": {
         "reflect-metadata": "^0.1.13",
@@ -43,6 +44,7 @@
         "@typescript-eslint/eslint-plugin": "5.1.0",
         "@typescript-eslint/parser": "5.1.0",
         "chai": "^4.3.4",
+        "dotenv-cli": "^4.1.0",
         "eslint": "7.27.0",
         "eslint-config-alloy": "4.4.0",
         "eslint-config-prettier": "8.3.0",
