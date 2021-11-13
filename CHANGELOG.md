@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Zolyn/pinia-store-decorators/compare/v1.0.4...v1.1.0) (2021-11-13)
+
+### Features
+
+-   simplified definition ([d746ffc](https://github.com/Zolyn/pinia-store-decorators/commit/d746ffcca680f84b51982bd4b0fe85e71b763bc3))
+-   support extended classes ([f6cdcf4](https://github.com/Zolyn/pinia-store-decorators/commit/f6cdcf49680b2aec2711f9f72deb928b5a46f0a2))
+
 ## [1.0.4](https://github.com/Zolyn/pinia-store-decorators/compare/v1.0.2...v1.0.4) (2021-10-25)
 
 ### Bug Fixes

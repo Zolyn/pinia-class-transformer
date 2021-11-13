@@ -5,7 +5,15 @@
             "infile": "CHANGELOG.md"
         }
     },
+    "git": {
+        "commitMessage": "chore: release v${version}"
+    },
     "npm": {
+        "publish": false,
         "skipChecks": true
+    },
+    "github": {
+        "release": true,
+        "releaseName": "v${version}"
     }
 }
