@@ -4,6 +4,7 @@ module.exports = {
         node: true,
         browser: true,
         commonjs: true,
+        mocha: true,
     },
     globals: {},
     rules: {},

@@ -1,0 +1,5 @@
+{
+    "color": true,
+    "require": ["ts-node/register"],
+    "spec": ["test/**/*.test.ts"]
+}
