@@ -70,7 +70,7 @@ const mainStore = {
     },
 };
 
-export const useMainStore = defineStore(mainStore);
+export const useMainStore = defineStore('main', mainStore);
 ```
 
 WIP...
