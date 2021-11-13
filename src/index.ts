@@ -1,5 +1,5 @@
 import 'reflect-metadata';
 export * from './types';
+export * from './utils';
 export { Store } from './store';
-export { Action } from './action';
 export { createOptions } from './options';
