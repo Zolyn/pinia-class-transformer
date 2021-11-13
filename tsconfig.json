@@ -20,6 +20,5 @@
         "sourceMap": true,
         "listEmittedFiles": true
     },
-    "include": ["./src/**/*.ts"],
-    "exclude": ["./src/tests/*.ts"]
+    "include": ["./src/**/*.ts"]
 }
