@@ -1,15 +1,17 @@
-import { MetaDataKeys } from './types';
-import { StateTree, ActionsTree, GettersTree, DefineStoreOptions } from 'pinia';
+import { collectGettersAndActions, mergeObjectArray } from './utils';
+import { Ctor, MetaDataKeys } from './types';
+import { StateTree, _ActionsTree, _GettersTree, DefineStoreOptions } from 'pinia';
 
 /**
  * Store装饰器工厂
  *
  * @public
  */
-export function Store(StoreConstructor: Function): void {
-    // Avoid typesript warning
-    const ins = new StoreConstructor.prototype.constructor();
+export function Store(StoreConstructor: Ctor): void {
+    const ins = new StoreConstructor();
+
     const states: StateTree = {};
+
     Object.getOwnPropertyNames(ins).map((state): undefined => {
         const descriptor = Object.getOwnPropertyDescriptor(ins, state);
         if (descriptor) {
@@ -19,24 +21,15 @@ export function Store(StoreConstructor: Function): void {
         return undefined;
     });
 
-    const getters: GettersTree<StateTree> = {};
-    Object.getOwnPropertyNames(StoreConstructor.prototype).map((getter): undefined => {
-        const descriptor = Object.getOwnPropertyDescriptor(StoreConstructor.prototype, getter);
-        if (descriptor?.get) {
-            getters[getter] = descriptor.get;
-        }
+    const { getters, actions } = mergeObjectArray(collectGettersAndActions(StoreConstructor).reverse());
 
-        return undefined;
-    });
-
-    const actions: ActionsTree = Reflect.getMetadata(MetaDataKeys.Actions, ins) ?? {};
-
-    const storeOptions: DefineStoreOptions<string, StateTree, GettersTree<StateTree>, ActionsTree> = {
+    const storeOptions: DefineStoreOptions<string, StateTree, _GettersTree<StateTree>, _ActionsTree> = {
         id: 'default id',
         state: () => states,
         getters,
         actions,
     };
 
+    Reflect.defineMetadata(MetaDataKeys.Sign, 'sign', StoreConstructor);
     Reflect.defineMetadata(MetaDataKeys.StoreOptions, storeOptions, StoreConstructor);
 }
