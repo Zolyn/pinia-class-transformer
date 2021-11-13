@@ -28,7 +28,7 @@
         "test": "dotenv mocha",
         "format": "prettier --write ./src/**/*.ts ./src/*.ts",
         "prepare": "husky install",
-        "release": "dotenv -c local release-it --"
+        "release": "dotenv -e .env.local release-it --"
     },
     "dependencies": {
         "reflect-metadata": "^0.1.13",

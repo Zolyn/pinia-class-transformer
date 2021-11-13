@@ -4,5 +4,8 @@
             "preset": "angular",
             "infile": "CHANGELOG.md"
         }
+    },
+    "npm": {
+        "skipChecks": true
     }
 }
