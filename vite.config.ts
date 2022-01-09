@@ -7,7 +7,7 @@ export default defineConfig({
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
             name: 'PiniaStoreDecorators',
-            formats: ['es', 'cjs'],
+            formats: ['es', 'umd'],
             fileName: (format) => `pinia-store-decorators.${format}.js`,
         },
         rollupOptions: {
