@@ -26,7 +26,6 @@ interface StringKeyObject {
  * @public
  */
 const enum MetaDataKeys {
-    Sign = 'pinia-store-decorators:Sign',
     StoreOptions = 'pinia-store-decorators:StoreOptions',
 }
 

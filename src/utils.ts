@@ -12,15 +12,18 @@ function collectGettersAndActions(Ctor: Ctor): GettersAndActions[] {
     const getters: GettersAndActions['getters'] = {};
     const actions: GettersAndActions['actions'] = {};
 
+    // 获取类原型上的属性（Getter和Action）
     Object.getOwnPropertyNames(Ctor.prototype).map((propertyName): undefined => {
         const descriptor = Object.getOwnPropertyDescriptor(Ctor.prototype, propertyName);
         const getter = descriptor?.get;
+        const setter = descriptor?.set;
         const action = descriptor?.value;
 
-        if (getter) {
+        if (getter && !setter) {
             getters[propertyName] = getter;
         }
 
+        // 排除构造函数
         if (typeof action === 'function' && action !== Ctor) {
             actions[propertyName] = action;
         }
@@ -35,12 +38,12 @@ function collectGettersAndActions(Ctor: Ctor): GettersAndActions[] {
     // 继承其他类的情况
     if (parentObject.name !== '') {
         // 若父类被装饰过，提取父类元数据
-        if (Reflect.getMetadata(MetaDataKeys.Sign, parentObject)) {
-            const { getters, actions } = Reflect.getMetadata(
-                MetaDataKeys.StoreOptions,
-                parentObject,
-            ) as GettersAndActions;
-            optionList.push({ getters, actions });
+        const parentStoreOptions = Reflect.getMetadata(MetaDataKeys.StoreOptions, parentObject) as GettersAndActions;
+        if (parentStoreOptions) {
+            optionList.push({
+                getters: parentStoreOptions.getters,
+                actions: parentStoreOptions.actions,
+            });
         } else {
             optionList.push(...collectGettersAndActions(parentObject));
         }
@@ -80,10 +83,10 @@ function deepMerge<T extends StringKeyObject>(target: T, merge: T): T {
     const keys = [...new Set([...Object.keys(target), ...Object.keys(merge)])];
     const mergedObject: StringKeyObject = {};
     keys.map((key): undefined => {
-        mergedObject[key] = merge[key] ?? target[key];
-
         if (typeof target[key] === 'object' && typeof merge[key] === 'object') {
             mergedObject[key] = deepMerge(target[key], merge[key]);
+        } else {
+            mergedObject[key] = merge[key] ?? target[key];
         }
 
         return undefined;

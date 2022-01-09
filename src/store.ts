@@ -12,6 +12,7 @@ export function Store(StoreConstructor: Ctor): void {
 
     const states: StateTree = {};
 
+    // 获取实例属性（State）
     Object.getOwnPropertyNames(ins).map((state): undefined => {
         const descriptor = Object.getOwnPropertyDescriptor(ins, state);
         if (descriptor) {
@@ -30,6 +31,5 @@ export function Store(StoreConstructor: Ctor): void {
         actions,
     };
 
-    Reflect.defineMetadata(MetaDataKeys.Sign, 'sign', StoreConstructor);
     Reflect.defineMetadata(MetaDataKeys.StoreOptions, storeOptions, StoreConstructor);
 }
