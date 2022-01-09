@@ -1,6 +1,6 @@
 {
     "name": "pinia-store-decorators",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Typescript Decorators to define Pinia stores.",
     "repository": "https://github.com/Zolyn/pinia-store-decorators.git",
     "license": "MIT",

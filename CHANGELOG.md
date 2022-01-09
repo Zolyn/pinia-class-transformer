@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/Zolyn/pinia-store-decorators/compare/v1.1.0...v1.1.1) (2022-01-09)
+
+### Bug Fixes
+
+-   logic optimization ([786c4cb](https://github.com/Zolyn/pinia-store-decorators/commit/786c4cbe2ba0c224696bb435857e202f96852df8))
+
 # [1.1.0](https://github.com/Zolyn/pinia-store-decorators/compare/v1.0.4...v1.1.0) (2021-11-13)
 
 ### Features
