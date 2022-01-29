@@ -1,3 +1,5 @@
+# [2.0.0](https://github.com/Zolyn/pinia-class-transformer/compare/v1.1.1...v2.0.0) (2022-01-29)
+
 ## [1.1.1](https://github.com/Zolyn/pinia-store-decorators/compare/v1.1.0...v1.1.1) (2022-01-09)
 
 ### Bug Fixes
