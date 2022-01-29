@@ -1,24 +1,24 @@
 {
-    "name": "pinia-store-decorators",
+    "name": "pinia-class-transformer",
     "version": "1.1.1",
-    "description": "Typescript Decorators to define Pinia stores.",
-    "repository": "https://github.com/Zolyn/pinia-store-decorators.git",
+    "description": "Transform classes to a Pinia store.",
+    "repository": "https://github.com/Zolyn/pinia-class-transformer.git",
     "license": "MIT",
     "author": "Zorin <zorin1477@gmail.com>",
     "exports": {
         ".": {
-            "import": "./dist/pinia-store-decorators.es.js",
-            "require": "./dist/pinia-store-decorators.umd.js"
+            "import": "./dist/pinia-class-transformer.es.js",
+            "require": "./dist/pinia-class-transformer.umd.js"
         }
     },
-    "main": "./dist/pinia-store-decorators.umd.js",
-    "module": "./dist/pinia-store-decorators.es.js",
-    "types": "./dist/pinia-store-decorators.d.ts",
-    "typings": "./dist/pinia-store-decorators.d.ts",
+    "main": "./dist/pinia-class-transformer.umd.js",
+    "module": "./dist/pinia-class-transformer.es.js",
+    "types": "./dist/pinia-class-transformer.d.ts",
+    "typings": "./dist/pinia-class-transformer.d.ts",
     "files": [
-        "dist/pinia-store-decorators.*.js",
-        "dist/pinia-store-decorators.*.js.map",
-        "dist/pinia-store-decorators.d.ts"
+        "dist/pinia-class-transformer.*.js",
+        "dist/pinia-class-transformer.*.js.map",
+        "dist/pinia-class-transformer.d.ts"
     ],
     "scripts": {
         "clean": "rm -rf ./dist",
@@ -31,7 +31,6 @@
         "release": "dotenv -e .env.local release-it --"
     },
     "dependencies": {
-        "reflect-metadata": "^0.1.13",
         "type-fest": "^2.5.3"
     },
     "devDependencies": {
@@ -49,6 +48,7 @@
         "eslint-config-alloy": "4.4.0",
         "eslint-config-prettier": "8.3.0",
         "eslint-plugin-prettier": "3.4.1",
+        "esno": "^0.14.0",
         "husky": "6.0.0",
         "lint-staged": "11.0.0",
         "mocha": "^9.1.3",

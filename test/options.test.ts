@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { Store, createOptions } from '../src';
+import { Store, createOptions } from '../src/old';
 
 @Store
 class TestClass {

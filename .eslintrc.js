@@ -7,5 +7,16 @@ module.exports = {
         mocha: true,
     },
     globals: {},
-    rules: {},
+    rules: {
+        'guard-for-in': 'off',
+        'array-callback-return': 'off',
+        '@typescript-eslint/explicit-member-accessibility': [
+            'error',
+            {
+                accessibility: 'no-public',
+            },
+        ],
+        '@typescript-eslint/consistent-type-assertions': 'off',
+        '@typescript-eslint/class-literal-property-style': 'off',
+    },
 };

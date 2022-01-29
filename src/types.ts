@@ -1,32 +1,14 @@
-import { ConditionalPick, ConditionalExcept } from 'type-fest';
-import { _ActionsTree, _GettersTree, StateTree } from 'pinia';
+import { ConditionalPick, ConditionalExcept, Class } from 'type-fest';
+import { ComputedRef, Ref } from 'vue';
+import { StoreFragment } from './storeFragment';
 
 /**
- * 由Getters和Actions组成的对象
+ * 键类型为string的对象
  *
- * @public
+ * @internal
  */
-interface GettersAndActions {
-    getters: _GettersTree<StateTree>;
-    actions: _ActionsTree;
-}
-
-/**
- * 只有string类型的键的对象
- *
- * @public
- */
-interface StringKeyObject {
+interface _StringKeyObject {
     [p: string]: any;
-}
-
-/**
- * 元数据键名列表
- *
- * @public
- */
-const enum MetaDataKeys {
-    StoreOptions = 'pinia-store-decorators:StoreOptions',
 }
 
 /**
@@ -39,22 +21,69 @@ type Func = (...args: any[]) => any;
 /**
  * 宽松的构造函数类型
  *
- * @public
+ * @internal
  */
-type Ctor = new (...args: any[]) => any;
+type _Ctor = new (...args: any[]) => any;
 
 /**
  * Actions类型
  *
  * @public
  */
-type Actions<C> = ConditionalPick<C, Func>;
+type Actions<C> = Omit<ConditionalPick<C, Func>, 'setup'>;
 
 /**
- * States和Getters构成的类型
+ * 对象C中除_Func类型之外的类型
  *
  * @public
  */
-type StatesAndGetters<C> = ConditionalExcept<C, Func>;
+type ExcludeFunc<C> = ConditionalExcept<C, Func>;
 
-export { MetaDataKeys, Func, Ctor, Actions, StatesAndGetters, GettersAndActions, StringKeyObject };
+/**
+ * 经过ref()函数转化的State
+ *
+ * @public
+ */
+type ReactiveStateTree<C extends object> = {
+    [K in keyof ExcludeFunc<C>]?: Ref<ExcludeFunc<C>[K]>;
+};
+
+/**
+ * 经过computed()函数转化的Getters
+ *
+ * @public
+ */
+type ReactiveGettersTree<C extends object> = {
+    [K in keyof ExcludeFunc<C>]?: ComputedRef<ExcludeFunc<C>[K]>;
+};
+
+/**
+ * 转换选项
+ *
+ * @public
+ */
+interface TransformOptions<C extends object, CC extends StoreFragment<C, CC>> {
+    state: Class<C>;
+    fragment: Class<CC>;
+}
+
+/**
+ * 转换结果
+ *
+ * @public
+ */
+type TransformResult<C extends object, CC extends object> = ReactiveStateTree<C> &
+    ReactiveGettersTree<CC> &
+    Actions<CC>;
+
+export {
+    _StringKeyObject,
+    Func,
+    _Ctor,
+    Actions,
+    ExcludeFunc,
+    ReactiveStateTree,
+    ReactiveGettersTree,
+    TransformOptions,
+    TransformResult,
+};

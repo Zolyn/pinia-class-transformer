@@ -6,12 +6,17 @@ export default defineConfig({
         sourcemap: true,
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
-            name: 'PiniaStoreDecorators',
+            name: 'PiniaClassTransformer',
             formats: ['es', 'umd'],
-            fileName: (format) => `pinia-store-decorators.${format}.js`,
+            fileName: (format) => `pinia-class-transformer.${format}.js`,
         },
         rollupOptions: {
-            external: ['reflect-metadata', 'pinia'],
+            external: ['vue'],
+            output: {
+                globals: {
+                    vue: 'Vue',
+                },
+            },
         },
     },
 });

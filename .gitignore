@@ -24,3 +24,4 @@ temp
 
 # local env
 .env.local
+src/test.ts

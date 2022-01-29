@@ -1,4 +1,4 @@
-import { mergeObjectArray } from '../src';
+import { mergeObjectArray } from '../src/old';
 import { expect } from 'chai';
 
 const arr = [
