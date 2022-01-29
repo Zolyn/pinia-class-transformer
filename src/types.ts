@@ -45,7 +45,7 @@ type ExcludeFunc<C> = ConditionalExcept<C, Func>;
  * @public
  */
 type ReactiveStateTree<C extends object> = {
-    [K in keyof ExcludeFunc<C>]?: Ref<ExcludeFunc<C>[K]>;
+    [K in keyof ExcludeFunc<C>]: Ref<ExcludeFunc<C>[K]>;
 };
 
 /**
@@ -54,7 +54,7 @@ type ReactiveStateTree<C extends object> = {
  * @public
  */
 type ReactiveGettersTree<C extends object> = {
-    [K in keyof ExcludeFunc<C>]?: ComputedRef<ExcludeFunc<C>[K]>;
+    [K in keyof ExcludeFunc<C>]: ComputedRef<ExcludeFunc<C>[K]>;
 };
 
 /**

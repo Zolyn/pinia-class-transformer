@@ -36,6 +36,7 @@ function transformClass<C extends object, CC extends StoreFragment<C, CC>>(
 
     const rootProxy = _createProxy(proxyContainer);
 
+    // @ts-ignore
     const states: ReactiveStateTree<C> = {};
 
     Object.entries(_getState(options.state)).map(([key, value]) => {
@@ -49,6 +50,7 @@ function transformClass<C extends object, CC extends StoreFragment<C, CC>>(
 
     const fragment = _getStoreFragment(options.fragment);
 
+    // @ts-ignore
     const getters: ReactiveGettersTree<CC> = {};
 
     Object.entries(fragment.getters).map(([key, value]) => {
