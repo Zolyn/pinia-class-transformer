@@ -1,6 +1,6 @@
 {
     "name": "pinia-class-transformer",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Transform classes to a Pinia store.",
     "repository": "https://github.com/Zolyn/pinia-class-transformer.git",
     "license": "MIT",
