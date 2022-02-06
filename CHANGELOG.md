@@ -1,3 +1,9 @@
+## [2.0.2](https://github.com/Zolyn/pinia-class-transformer/compare/v2.0.1...v2.0.2) (2022-02-06)
+
+### Features
+
+-   return transform result directly ([817e25e](https://github.com/Zolyn/pinia-class-transformer/commit/817e25e3e9eef90fac24d1f679e31ac336207bc1))
+
 ## [2.0.1](https://github.com/Zolyn/pinia-class-transformer/compare/v2.0.0...v2.0.1) (2022-01-29)
 
 ### Bug Fixes
