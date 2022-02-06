@@ -31,7 +31,7 @@ interface ProxyContainer<C extends object, CC extends StoreFragment<C, CC>> exte
  */
 function transformClass<C extends object, CC extends StoreFragment<C, CC>>(
     options: TransformOptions<C, CC>,
-): () => TransformResult<C, CC> {
+): TransformResult<C, CC> {
     const proxyContainer: ProxyContainer<C, CC> = {};
 
     const rootProxy = _createProxy(proxyContainer);
@@ -44,9 +44,7 @@ function transformClass<C extends object, CC extends StoreFragment<C, CC>>(
         states[key] = ref(value);
     });
 
-    const stateProxy = _createProxy(states);
-
-    proxyContainer.state = stateProxy;
+    proxyContainer.state = _createProxy(states);
 
     const fragment = _getStoreFragment(options.fragment);
 
@@ -74,13 +72,11 @@ function transformClass<C extends object, CC extends StoreFragment<C, CC>>(
 
     proxyContainer.wrappedStore = result;
 
-    return () => {
-        if (fragment.setup) {
-            fragment.setup.call(rootProxy);
-        }
+    if (fragment.setup) {
+        fragment.setup.call(rootProxy);
+    }
 
-        return result;
-    };
+    return result;
 }
 
 export { transformClass };
