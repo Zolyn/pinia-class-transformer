@@ -1,3 +1,9 @@
+## [2.0.3](https://github.com/Zolyn/pinia-class-transformer/compare/v2.0.2...v2.0.3) (2022-02-20)
+
+### Bug Fixes
+
+-   return result wrapped by a function, Reflect API ([5ef550e](https://github.com/Zolyn/pinia-class-transformer/commit/5ef550e38ba1c00287a0993ba3e88e160e7284e0))
+
 ## [2.0.2](https://github.com/Zolyn/pinia-class-transformer/compare/v2.0.1...v2.0.2) (2022-02-06)
 
 ### Features
