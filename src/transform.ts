@@ -31,52 +31,52 @@ interface ProxyContainer<C extends object, CC extends StoreFragment<C, CC>> exte
  */
 function transformClass<C extends object, CC extends StoreFragment<C, CC>>(
     options: TransformOptions<C, CC>,
-): TransformResult<C, CC> {
+): () => TransformResult<C, CC> {
     const proxyContainer: ProxyContainer<C, CC> = {};
-
     const rootProxy = _createProxy(proxyContainer);
 
     // @ts-ignore
     const states: ReactiveStateTree<C> = {};
+    const stateProxy = _createProxy(states);
 
-    Object.entries(_getState(options.state)).map(([key, value]) => {
-        // @ts-ignore
-        states[key] = ref(value);
+    Object.entries(_getState(options.state)).forEach(([key, value]) => {
+        Reflect.set(stateProxy, key, ref(value));
     });
 
-    proxyContainer.state = _createProxy(states);
+    proxyContainer.state = stateProxy;
 
     const fragment = _getStoreFragment(options.fragment);
+    const { setup } = fragment;
 
     // @ts-ignore
     const getters: ReactiveGettersTree<CC> = {};
 
-    Object.entries(fragment.getters).map(([key, value]) => {
-        // @ts-ignore
-        proxyContainer[key] = computed((value as Func).bind(rootProxy));
-        // @ts-ignore
-        getters[key] = proxyContainer[key];
+    Object.entries(fragment.getters).forEach(([key, value]) => {
+        const computedRef = computed((value as Func).bind(rootProxy));
+        Reflect.set(rootProxy, key, computedRef);
+        Reflect.set(getters, key, computedRef);
     });
 
     // @ts-ignore
     const actions: Actions<CC> = {};
 
-    Object.entries(fragment.actions).map(([key, value]) => {
-        // @ts-ignore
-        proxyContainer[key] = (value as Func).bind(rootProxy);
-        // @ts-ignore
-        actions[key] = proxyContainer[key];
+    Object.entries(fragment.actions).forEach(([key, value]) => {
+        const boundFunc = (value as Func).bind(rootProxy);
+        Reflect.set(rootProxy, key, boundFunc);
+        Reflect.set(actions, key, boundFunc);
     });
 
     const result: TransformResult<C, CC> = { ...states, ...getters, ...actions };
 
     proxyContainer.wrappedStore = result;
 
-    if (fragment.setup) {
-        fragment.setup.call(rootProxy);
-    }
+    return () => {
+        if (setup) {
+            Reflect.apply(setup, rootProxy, []);
+        }
 
-    return result;
+        return result;
+    };
 }
 
 export { transformClass };

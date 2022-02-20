@@ -9,27 +9,23 @@ import { isRef } from 'vue';
  */
 function _createProxy<T extends object>(target: T) {
     return new Proxy(target, {
-        get(target: T, p: string | symbol): any {
+        get(target: T, p: string | symbol, receiver: any): any {
             // @ts-ignore
-            if (isRef(target[p])) {
-                // @ts-ignore
-                return target[p].value;
+            const targetVal = target[p];
+            if (isRef(targetVal)) {
+                return Reflect.get(targetVal, 'value');
             } else {
-                // @ts-ignore
-                return target[p];
+                return Reflect.get(target, p);
             }
         },
         set(target: T, p: string | symbol, value: any): boolean {
             // @ts-ignore
-            if (isRef(target[p])) {
-                // @ts-ignore
-                target[p].value = value;
+            const targetVal = target[p];
+            if (isRef(targetVal)) {
+                return Reflect.set(targetVal, 'value', value);
             } else {
-                // @ts-ignore
-                target[p] = value;
+                return Reflect.set(target, p, value);
             }
-
-            return true;
         },
     });
 }

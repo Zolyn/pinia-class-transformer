@@ -37,8 +37,8 @@ function _getStoreFragment<C extends object, CC extends StoreFragment<C, CC>>(
     const getters: _GettersTree<StateTree> = {};
     let setup: Func | undefined;
 
-    // 获取类的方法（Actions）
-    Object.getOwnPropertyNames(Fragment.prototype).map((propertyName) => {
+    // 获取Actions和Getters
+    Object.getOwnPropertyNames(Fragment.prototype).forEach((propertyName) => {
         const descriptor = Object.getOwnPropertyDescriptor(Fragment.prototype, propertyName);
         const getter = descriptor?.get;
         const setter = descriptor?.set;

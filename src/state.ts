@@ -15,7 +15,7 @@ function _getState<C>(State: Class<C>): ExcludeFunc<C> {
     const states: StateTree = {};
 
     // 获取实例属性（State）
-    Object.getOwnPropertyNames(ins).map((state) => {
+    Object.getOwnPropertyNames(ins).forEach((state) => {
         const descriptor = Object.getOwnPropertyDescriptor(ins, state);
         if (descriptor) {
             states[state] = descriptor.value;
