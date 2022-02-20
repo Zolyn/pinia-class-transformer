@@ -15,6 +15,7 @@
     "module": "./dist/pinia-class-transformer.es.js",
     "types": "./dist/pinia-class-transformer.d.ts",
     "typings": "./dist/pinia-class-transformer.d.ts",
+    "sideEffects": false,
     "files": [
         "dist/pinia-class-transformer.*.js",
         "dist/pinia-class-transformer.*.js.map",
@@ -31,33 +32,37 @@
         "release": "dotenv -e .env.local release-it --"
     },
     "dependencies": {
-        "type-fest": "^2.5.3"
+        "type-fest": "^2.12.0"
     },
     "devDependencies": {
         "@commitlint/cli": "12.1.4",
         "@commitlint/config-conventional": "12.1.4",
         "@microsoft/api-extractor": "7.18.16",
         "@release-it/conventional-changelog": "3.3.0",
-        "@types/chai": "^4.2.22",
-        "@types/mocha": "^9.0.0",
+        "@types/chai": "^4.3.0",
+        "@types/mocha": "^9.1.0",
         "@typescript-eslint/eslint-plugin": "5.1.0",
         "@typescript-eslint/parser": "5.1.0",
-        "chai": "^4.3.4",
-        "dotenv-cli": "^4.1.0",
+        "chai": "^4.3.6",
+        "dotenv-cli": "^4.1.1",
         "eslint": "7.27.0",
         "eslint-config-alloy": "4.4.0",
         "eslint-config-prettier": "8.3.0",
         "eslint-plugin-prettier": "3.4.1",
-        "esno": "^0.14.0",
+        "esno": "^0.14.1",
         "husky": "6.0.0",
         "lint-staged": "11.0.0",
-        "mocha": "^9.1.3",
-        "pinia": "^2.0.3",
+        "mocha": "^9.2.1",
+        "pinia": "^2.0.11",
         "prettier": "2.3.0",
         "release-it": "14.11.6",
-        "ts-node": "^10.4.0",
+        "ts-node": "^10.5.0",
         "typescript": "4.4.4",
-        "vite": "2.6.10",
-        "vue": "3"
+        "vite": "2.8.4",
+        "vue": "^3.2.31"
+    },
+    "peerDependencies": {
+        "pinia": "^2.0.11",
+        "vue": "^3.2.31"
     }
 }
