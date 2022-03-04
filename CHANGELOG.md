@@ -1,3 +1,9 @@
+# [2.1.0](https://github.com/Zolyn/pinia-class-transformer/compare/v2.0.3...v2.1.0) (2022-03-04)
+
+### Features
+
+-   new ways of defining store (compatible with v1) ([8db3f1e](https://github.com/Zolyn/pinia-class-transformer/commit/8db3f1e7d61e5eed4d6094f23bd99a42febdb399))
+
 ## [2.0.3](https://github.com/Zolyn/pinia-class-transformer/compare/v2.0.2...v2.0.3) (2022-02-20)
 
 ### Bug Fixes
