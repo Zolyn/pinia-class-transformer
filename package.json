@@ -46,7 +46,7 @@
         "chai": "^4.3.6",
         "dotenv-cli": "^4.1.1",
         "eslint": "7.27.0",
-        "eslint-config-alloy": "4.4.0",
+        "eslint-config-alloy": "4.5.1",
         "eslint-config-prettier": "8.3.0",
         "eslint-plugin-prettier": "3.4.1",
         "esno": "^0.14.1",

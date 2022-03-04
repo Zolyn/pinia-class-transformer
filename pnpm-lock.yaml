@@ -12,7 +12,7 @@ specifiers:
   chai: ^4.3.6
   dotenv-cli: ^4.1.1
   eslint: 7.27.0
-  eslint-config-alloy: 4.4.0
+  eslint-config-alloy: 4.5.1
   eslint-config-prettier: 8.3.0
   eslint-plugin-prettier: 3.4.1
   esno: ^0.14.1
@@ -43,7 +43,7 @@ devDependencies:
   chai: 4.3.6
   dotenv-cli: 4.1.1
   eslint: 7.27.0
-  eslint-config-alloy: 4.4.0
+  eslint-config-alloy: 4.5.1
   eslint-config-prettier: 8.3.0_eslint@7.27.0
   eslint-plugin-prettier: 3.4.1_beb8ddd1fba5378f74976112c7860a07
   esno: 0.14.1
@@ -1911,8 +1911,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /eslint-config-alloy/4.4.0:
-    resolution: {integrity: sha512-yWG9T+ufc7V5EDg+7z1VEBi9wX259uWR73pGhTGx+FkPqlO3gdvH0kxtzuirEweJ9nXhTtMiArPcfS24VvJe2A==}
+  /eslint-config-alloy/4.5.1:
+    resolution: {integrity: sha512-rdHaoAyOf4scccQX3bxqmUa85+cvyhPvijqobsZT+Cdt0HGAbhGby3lghmotGOYHACRTtn7gs+oM5pnnmPkXyw==}
     dev: true
 
   /eslint-config-prettier/8.3.0_eslint@7.27.0:
