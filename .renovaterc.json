@@ -1,0 +1,4 @@
+{
+    "extends": ["github>Zolyn/renovate-config"],
+    "baseBranches": ["v2"]
+}
