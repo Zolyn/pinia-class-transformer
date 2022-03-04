@@ -9,7 +9,7 @@ import { StateTree } from 'pinia';
  *
  * @internal
  */
-function _getState<C>(State: Class<C>): ExcludeFunc<C> {
+function _getState<S extends object>(State: Class<S>): ExcludeFunc<S> {
     const ins = new State();
 
     const states: StateTree = {};
@@ -22,7 +22,7 @@ function _getState<C>(State: Class<C>): ExcludeFunc<C> {
         }
     });
 
-    return states as ExcludeFunc<C>;
+    return states as ExcludeFunc<S>;
 }
 
 export { _getState };

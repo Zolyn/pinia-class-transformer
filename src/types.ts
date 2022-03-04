@@ -1,15 +1,12 @@
-import { ConditionalPick, ConditionalExcept, Class } from 'type-fest';
+import { ConditionalPick, ConditionalExcept } from 'type-fest';
 import { ComputedRef, Ref } from 'vue';
-import { StoreFragment } from './storeFragment';
 
 /**
  * 键类型为string的对象
  *
  * @internal
  */
-interface _StringKeyObject {
-    [p: string]: any;
-}
+type _StringKeyObject = Record<string, any>;
 
 /**
  * 宽松的函数类型
@@ -19,33 +16,26 @@ interface _StringKeyObject {
 type Func = (...args: any[]) => any;
 
 /**
- * 宽松的构造函数类型
- *
- * @internal
- */
-type _Ctor = new (...args: any[]) => any;
-
-/**
  * Actions类型
  *
  * @public
  */
-type Actions<C> = Omit<ConditionalPick<C, Func>, 'setup'>;
+type Actions<S> = Omit<ConditionalPick<S, Func>, 'setup'>;
 
 /**
- * 对象C中除_Func类型之外的类型
+ * 对象S中除Func类型之外的类型
  *
  * @public
  */
-type ExcludeFunc<C> = ConditionalExcept<C, Func>;
+type ExcludeFunc<S> = ConditionalExcept<S, Func>;
 
 /**
  * 经过ref()函数转化的State
  *
  * @public
  */
-type ReactiveStateTree<C extends object> = {
-    [K in keyof ExcludeFunc<C>]: Ref<ExcludeFunc<C>[K]>;
+type ReactiveStateTree<S extends object> = {
+    [K in keyof ExcludeFunc<S>]: Ref<ExcludeFunc<S>[K]>;
 };
 
 /**
@@ -53,37 +43,31 @@ type ReactiveStateTree<C extends object> = {
  *
  * @public
  */
-type ReactiveGettersTree<C extends object> = {
-    [K in keyof ExcludeFunc<C>]: ComputedRef<ExcludeFunc<C>[K]>;
+type ReactiveGettersTree<S extends object> = {
+    [K in keyof ExcludeFunc<S>]: ComputedRef<ExcludeFunc<S>[K]>;
 };
-
-/**
- * 转换选项
- *
- * @public
- */
-interface TransformOptions<C extends object, CC extends StoreFragment<C, CC>> {
-    state: Class<C>;
-    fragment: Class<CC>;
-}
 
 /**
  * 转换结果
  *
  * @public
  */
-type TransformResult<C extends object, CC extends object> = ReactiveStateTree<C> &
-    ReactiveGettersTree<CC> &
-    Actions<CC>;
+type TransformResult<S extends object, F extends object> = ReactiveStateTree<S> & ReactiveGettersTree<F> & Actions<F>;
+
+/**
+ * 定义Store的setup函数
+ *
+ * @public
+ */
+type StoreSetup<S extends object, F extends object = Actions<S>> = () => TransformResult<S, F>;
 
 export {
     _StringKeyObject,
     Func,
-    _Ctor,
     Actions,
     ExcludeFunc,
     ReactiveStateTree,
     ReactiveGettersTree,
-    TransformOptions,
     TransformResult,
+    StoreSetup,
 };

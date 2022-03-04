@@ -8,67 +8,92 @@ import {
     ReactiveGettersTree,
     ReactiveStateTree,
     _StringKeyObject,
-    TransformOptions,
     TransformResult,
+    StoreSetup,
 } from './types';
+import { Class } from 'type-fest';
 
 /**
  * 根proxy容器
  *
  * @internal
  */
-interface ProxyContainer<C extends object, CC extends StoreFragment<C, CC>> extends _StringKeyObject {
-    state?: ReactiveStateTree<C>;
-    wrappedStore?: TransformResult<C, CC>;
+interface ProxyContainer<S extends object, F extends StoreFragment<S, F>> extends _StringKeyObject {
+    state?: ReactiveStateTree<S>;
+    wrappedStore?: TransformResult<S, F>;
 }
 
 /**
- * 转换Class为Pinia setup函数
- *
- * @param options - state: State类，fragment: Store片段类
+ * @param storeClass - Store类
  *
  * @public
  */
-function transformClass<C extends object, CC extends StoreFragment<C, CC>>(
-    options: TransformOptions<C, CC>,
-): () => TransformResult<C, CC> {
-    const proxyContainer: ProxyContainer<C, CC> = {};
+function transformClass<S extends object>(storeClass: Class<S>): StoreSetup<S>;
+
+/**
+ * @param state - State类
+ * @param storeFragment - StoreFragment类
+ *
+ * @public
+ */
+function transformClass<S extends object, F extends StoreFragment<S, F>>(
+    state: Class<S>,
+    storeFragment: Class<F>,
+): StoreSetup<S, F>;
+
+function transformClass<S extends object, F extends StoreFragment<S, F>>(
+    stateOrWhole: Class<S>,
+    storeFragment?: Class<F>,
+): StoreSetup<S, F> {
+    const proxyContainer: ProxyContainer<S, F> = {};
     const rootProxy = _createProxy(proxyContainer);
 
     // @ts-ignore
-    const states: ReactiveStateTree<C> = {};
-    const stateProxy = _createProxy(states);
+    const states: ReactiveStateTree<S> = {};
 
-    Object.entries(_getState(options.state)).forEach(([key, value]) => {
-        Reflect.set(stateProxy, key, ref(value));
+    Object.entries(_getState(stateOrWhole)).forEach(([key, value]) => {
+        const refVal = ref(value);
+
+        if (!storeFragment) {
+            Reflect.set(rootProxy, key, refVal);
+        }
+
+        Reflect.set(states, key, refVal);
     });
 
-    proxyContainer.state = stateProxy;
+    if (storeFragment) {
+        rootProxy.state = _createProxy(states);
+    }
 
-    const fragment = _getStoreFragment(options.fragment);
+    const fragment = storeFragment
+        ? _getStoreFragment(storeFragment)
+        : _getStoreFragment(stateOrWhole as unknown as Class<F>);
+
     const { setup } = fragment;
 
     // @ts-ignore
-    const getters: ReactiveGettersTree<CC> = {};
+    const getters: ReactiveGettersTree<F> = {};
 
     Object.entries(fragment.getters).forEach(([key, value]) => {
         const computedRef = computed((value as Func).bind(rootProxy));
+
         Reflect.set(rootProxy, key, computedRef);
         Reflect.set(getters, key, computedRef);
     });
 
     // @ts-ignore
-    const actions: Actions<CC> = {};
+    const actions: Actions<F> = {};
 
     Object.entries(fragment.actions).forEach(([key, value]) => {
         const boundFunc = (value as Func).bind(rootProxy);
+
         Reflect.set(rootProxy, key, boundFunc);
         Reflect.set(actions, key, boundFunc);
     });
 
-    const result: TransformResult<C, CC> = { ...states, ...getters, ...actions };
+    const result: TransformResult<S, F> = { ...states, ...getters, ...actions };
 
-    proxyContainer.wrappedStore = result;
+    rootProxy.wrappedStore = result;
 
     return () => {
         if (setup) {

@@ -1,4 +1,5 @@
-import { isRef } from 'vue';
+import { ComputedRef, isRef, Ref } from 'vue';
+import { _StringKeyObject } from './types';
 
 /**
  * 创建一个代理对象
@@ -7,10 +8,9 @@ import { isRef } from 'vue';
  *
  * @internal
  */
-function _createProxy<T extends object>(target: T) {
+function _createProxy<T extends _StringKeyObject>(target: T) {
     return new Proxy(target, {
-        get(target: T, p: string | symbol, receiver: any): any {
-            // @ts-ignore
+        get(target: T, p: string): boolean {
             const targetVal = target[p];
             if (isRef(targetVal)) {
                 return Reflect.get(targetVal, 'value');
@@ -18,8 +18,7 @@ function _createProxy<T extends object>(target: T) {
                 return Reflect.get(target, p);
             }
         },
-        set(target: T, p: string | symbol, value: any): boolean {
-            // @ts-ignore
+        set(target: T, p: string, value: any): boolean {
             const targetVal = target[p];
             if (isRef(targetVal)) {
                 return Reflect.set(targetVal, 'value', value);
@@ -30,4 +29,15 @@ function _createProxy<T extends object>(target: T) {
     });
 }
 
-export { _createProxy };
+/**
+ * 强制将Ref类型转换为ComputedRef
+ *
+ * @param val - Ref类型的响应式变量
+ *
+ * @public
+ */
+function c<T>(val: Ref<T>): ComputedRef<T> {
+    return val as ComputedRef<T>;
+}
+
+export { _createProxy, c };

@@ -7,9 +7,9 @@ import { _ActionsTree, _GettersTree, StateTree } from 'pinia';
  *
  * @public
  */
-class StoreFragment<S extends object, SS extends object> {
-    protected state!: S;
-    protected wrappedStore!: TransformResult<S, SS>;
+class StoreFragment<S extends object, WS extends object> {
+    protected state!: ExcludeFunc<S>;
+    protected wrappedStore!: TransformResult<S, WS>;
 }
 
 /**
@@ -17,9 +17,9 @@ class StoreFragment<S extends object, SS extends object> {
  *
  * @internal
  */
-interface _Result<C> {
-    actions: Actions<C>;
-    getters: ExcludeFunc<C>;
+interface _Result<F> {
+    actions: Actions<F>;
+    getters: ExcludeFunc<F>;
     setup?: Func;
 }
 
@@ -30,9 +30,7 @@ interface _Result<C> {
  *
  * @internal
  */
-function _getStoreFragment<C extends object, CC extends StoreFragment<C, CC>>(
-    Fragment: Class<StoreFragment<C, CC>>,
-): _Result<C> {
+function _getStoreFragment<S extends object, F extends StoreFragment<S, F>>(Fragment: Class<F>): _Result<F> {
     const actions: _ActionsTree = {};
     const getters: _GettersTree<StateTree> = {};
     let setup: Func | undefined;
@@ -58,7 +56,7 @@ function _getStoreFragment<C extends object, CC extends StoreFragment<C, CC>>(
         }
     });
 
-    return { actions, getters, setup } as unknown as _Result<C>;
+    return { actions, getters, setup } as unknown as _Result<F>;
 }
 
 export { StoreFragment, _getStoreFragment, _Result };
