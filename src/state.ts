@@ -12,17 +12,17 @@ import { StateTree } from 'pinia';
 function _getState<S extends object>(State: Class<S>): ExcludeFunc<S> {
     const ins = new State();
 
-    const states: StateTree = {};
+    const stateTree: StateTree = {};
 
     // 获取实例属性（State）
     Object.getOwnPropertyNames(ins).forEach((state) => {
         const descriptor = Object.getOwnPropertyDescriptor(ins, state);
         if (descriptor) {
-            states[state] = descriptor.value;
+            stateTree[state] = descriptor.value;
         }
     });
 
-    return states as ExcludeFunc<S>;
+    return stateTree as ExcludeFunc<S>;
 }
 
 export { _getState };

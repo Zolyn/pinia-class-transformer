@@ -7,9 +7,9 @@ import { _ActionsTree, _GettersTree, StateTree } from 'pinia';
  *
  * @public
  */
-class StoreFragment<S extends object, WS extends object> {
+class StoreFragment<S extends object, F extends object> {
     protected state!: ExcludeFunc<S>;
-    protected wrappedStore!: TransformResult<S, WS>;
+    protected wrappedStore!: TransformResult<S, F>;
 }
 
 /**

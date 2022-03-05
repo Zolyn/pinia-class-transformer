@@ -49,7 +49,7 @@ function transformClass<S extends object, F extends StoreFragment<S, F>>(
     const rootProxy = _createProxy(proxyContainer);
 
     // @ts-ignore
-    const states: ReactiveStateTree<S> = {};
+    const stateTree: ReactiveStateTree<S> = {};
 
     Object.entries(_getState(stateOrWhole)).forEach(([key, value]) => {
         const refVal = ref(value);
@@ -58,11 +58,11 @@ function transformClass<S extends object, F extends StoreFragment<S, F>>(
             Reflect.set(rootProxy, key, refVal);
         }
 
-        Reflect.set(states, key, refVal);
+        Reflect.set(stateTree, key, refVal);
     });
 
     if (storeFragment) {
-        rootProxy.state = _createProxy(states);
+        rootProxy.state = _createProxy(stateTree);
     }
 
     const fragment = storeFragment
@@ -91,7 +91,7 @@ function transformClass<S extends object, F extends StoreFragment<S, F>>(
         Reflect.set(actions, key, boundFunc);
     });
 
-    const result: TransformResult<S, F> = { ...states, ...getters, ...actions };
+    const result: TransformResult<S, F> = { ...stateTree, ...getters, ...actions };
 
     rootProxy.wrappedStore = result;
 
