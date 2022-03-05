@@ -40,4 +40,15 @@ function c<T>(val: Ref<T>): ComputedRef<T> {
     return val as ComputedRef<T>;
 }
 
-export { _createProxy, c };
+/**
+ * 将Ref类型转换为Ref，修复部分IDE错误的类型提示
+ *
+ * @param val - Ref类型的响应式变量
+ *
+ * @public
+ */
+function r<T>(val: Ref<T>): Ref<T> {
+    return val;
+}
+
+export { _createProxy, c, r };
