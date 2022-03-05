@@ -150,7 +150,7 @@ Since the transformation result is a [Setup Store](https://github.com/vuejs/pini
 Generally, you don't need to append `.value` to State or Getters to access its value because it is automatically completed by [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/5de84d4cba3b83a07584a087acc4aec72e744263/src/utils.ts#L11).
 
 However, in some cases, you may want to access the Reactive Variable itself.
-You can get the wrapped store (the store without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/5de84d4cba3b83a07584a087acc4aec72e744263/src/utils.ts#L11)) through the `wrappedStore` property and access State and Getters in the form of Reactive Variables.
+You can get the wrapped store (the store which you defined without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/5de84d4cba3b83a07584a087acc4aec72e744263/src/utils.ts#L11)) through the `wrappedStore` property and access State and Getters in the form of Reactive Variables.
 
 This is an example of using this feature in [StoreFragment](#use-state--storefragment).
 
@@ -221,17 +221,17 @@ A class which contains Getters and Actions.
 
 #### Type parameters
 
-| Name | Type             | Description                           |
-| :--- | :--------------- | :------------------------------------ |
-| `S`  | extends `object` | the State class                       |
-| `F`  | extends `object` | the class which extends StoreFragment |
+| Name | Type             | Description                         |
+| :--- | :--------------- | :---------------------------------- |
+| `S`  | extends `object` | a State class                       |
+| `F`  | extends `object` | a class which extends StoreFragment |
 
 #### Properties
 
-| Modifiers   | Name           | Type                    | Description                                                                                          |
-| :---------- | :------------- | :---------------------- | :--------------------------------------------------------------------------------------------------- |
-| `protected` | `state`        | `ExcludeFunc<S>`        | Properties that are not functions in the State class                                                 |
-| `protected` | `wrappedStore` | `TransformResult<S, F>` | the store without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/v2/src/utils.ts#L11) |
+| Modifiers   | Name           | Type                    | Description                                                                                                            |
+| :---------- | :------------- | :---------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| `protected` | `state`        | `ExcludeFunc<S>`        | Properties that are not functions in the State class                                                                   |
+| `protected` | `wrappedStore` | `TransformResult<S, F>` | the store which you defined without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/v2/src/utils.ts#L11) |
 
 ### Store\<S>
 
@@ -241,13 +241,20 @@ A class which contains all the stuff.
 
 | Name | Type             | Description                   |
 | :--- | :--------------- | :---------------------------- |
-| `S`  | extends `object` | the class which extends Store |
+| `S`  | extends `object` | A class that may extend Store |
 
 #### Properties
 
-| Modifier    | Name           | Type                             | Description                                                                                          |
-| :---------- | :------------- | :------------------------------- | :--------------------------------------------------------------------------------------------------- |
-| `protected` | `wrappedStore` | `TransformResult<S, Actions<S>>` | the store without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/v2/src/utils.ts#L11) |
+| Modifier    | Name           | Type                             | Description                                                                                                            |
+| :---------- | :------------- | :------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| `protected` | `wrappedStore` | `TransformResult<S, Actions<S>>` | the store which you defined without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/v2/src/utils.ts#L11) |
+
+## Pros
+
+I think it's better to call it "Compare to [Setup Store](https://github.com/vuejs/pinia/issues/978)".
+
+-   You don't need to append `.value` to State or Getters to access its value.
+-   You don't need to return the Reactive Variables manually.
 
 ## Cons
 
