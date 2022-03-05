@@ -1,3 +1,13 @@
+## [2.1.1](https://github.com/Zolyn/pinia-class-transformer/compare/v2.1.0...v2.1.1) (2022-03-05)
+
+### Bug Fixes
+
+-   rename variables and type parameters ([70b9f3d](https://github.com/Zolyn/pinia-class-transformer/commit/70b9f3d273fdf80cf06af5eff0fd8a87f42761c8))
+
+### Features
+
+-   add helper function ([f4f3c65](https://github.com/Zolyn/pinia-class-transformer/commit/f4f3c65c04e4cdfe05439e9d0170dede2b02aa0a))
+
 # [2.1.0](https://github.com/Zolyn/pinia-class-transformer/compare/v2.0.3...v2.1.0) (2022-03-04)
 
 ### Features
