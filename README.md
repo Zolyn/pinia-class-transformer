@@ -96,7 +96,7 @@ In some ways, it is similar to [Setup Stores](https://github.com/vuejs/pinia/iss
 
 You can use Composition APIs like `watch` and `watchEffect` to monitor the store in an Action called `setup`.
 
-This feature can be used in [any](#usage) way you define a Store.
+This feature can be used in [any](#usage) way you define a store.
 
 **NOTE:** The return value of setup function will be ignored because I cannot find its use case.
 You can [open an issue](https://github.com/Zolyn/pinia-class-transformer/issues/new/choose) or [start a discussion](https://github.com/Zolyn/pinia-class-transformer/discussions/new) if you have any suggestions for that.
@@ -150,7 +150,7 @@ Since the transformation result is a [Setup Store](https://github.com/vuejs/pini
 Generally, you don't need to append `.value` to State or Getters to access its value because it is automatically completed by [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/5de84d4cba3b83a07584a087acc4aec72e744263/src/utils.ts#L11).
 
 However, in some cases, you may want to access the Reactive Variable itself.
-You can get the wrapped store (the store which you defined without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/5de84d4cba3b83a07584a087acc4aec72e744263/src/utils.ts#L11)) through the `wrappedStore` property and access State and Getters in the form of Reactive Variables.
+You can get the wrapped store (the store without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/5de84d4cba3b83a07584a087acc4aec72e744263/src/utils.ts#L11)) through the `wrappedStore` property and access State and Getters in the form of Reactive Variables.
 
 This is an example of using this feature in [StoreFragment](#use-state--storefragment).
 
@@ -228,10 +228,10 @@ A class which contains Getters and Actions.
 
 #### Properties
 
-| Modifiers   | Name           | Type                    | Description                                                                                                            |
-| :---------- | :------------- | :---------------------- | :--------------------------------------------------------------------------------------------------------------------- |
-| `protected` | `state`        | `ExcludeFunc<S>`        | Properties that are not functions in the State class                                                                   |
-| `protected` | `wrappedStore` | `TransformResult<S, F>` | the store which you defined without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/v2/src/utils.ts#L11) |
+| Modifiers   | Name           | Type                    | Description                                                                                          |
+| :---------- | :------------- | :---------------------- | :--------------------------------------------------------------------------------------------------- |
+| `protected` | `state`        | `ExcludeFunc<S>`        | Properties that are not functions in the State class                                                 |
+| `protected` | `wrappedStore` | `TransformResult<S, F>` | the store without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/v2/src/utils.ts#L11) |
 
 ### Store\<S>
 
@@ -245,9 +245,9 @@ A class which contains all the stuff.
 
 #### Properties
 
-| Modifier    | Name           | Type                             | Description                                                                                                            |
-| :---------- | :------------- | :------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
-| `protected` | `wrappedStore` | `TransformResult<S, Actions<S>>` | the store which you defined without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/v2/src/utils.ts#L11) |
+| Modifier    | Name           | Type                             | Description                                                                                          |
+| :---------- | :------------- | :------------------------------- | :--------------------------------------------------------------------------------------------------- |
+| `protected` | `wrappedStore` | `TransformResult<S, Actions<S>>` | the store without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/v2/src/utils.ts#L11) |
 
 ## Pros
 
