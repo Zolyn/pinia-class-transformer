@@ -320,6 +320,10 @@ That's why I added a helper function called `r` :(
 Well, this project is originally written for my own use :P. I don't know how much it affects the performance.
 If you're going to use it in a production environment, think carefully before using it.
 
+## Todo
+
+-   [ ] Support extended class (Low priority unless I found a practical use case).
+
 ## License
 
 [MIT](https://mit-license.org/)
