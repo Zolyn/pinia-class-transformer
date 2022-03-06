@@ -24,8 +24,8 @@ pnpm add -D pinia-class-transformer
 
 一共有两种方式来使用类定义 Store
 
--   [State + StoreFragment](#-state--storefragment) (推荐)
--   [Store](#-store)
+-   [State + StoreFragment](#使用-state--storefragment) (推荐)
+-   [Store](#使用-store)
 
 ### 使用 State + StoreFragment
 
@@ -87,7 +87,7 @@ const useMainStore = defineStore('main', transformClass(Main));
 export default useMainStore;
 ```
 
-虽然它看起来比上一个方式要方便一些，但它有一些 [缺点](#storefragment--store)。
+虽然它看起来比上一个方式要方便一些，但它有一些 [缺点](#缺点)。
 
 ### Setup 函数
 
@@ -95,7 +95,7 @@ export default useMainStore;
 
 你可以在一个名为 `setup` 的 Action 中使用像 `watch` 和 `watchEffect` 一样的 Composition APIs 来监听 store。
 
-无论你使用 [何种](#-state--storefragment) 方式定义 store，都可以使用这个特性。
+无论你使用 [何种](#用法) 方式定义 store，都可以使用这个特性。
 
 **注:** 因为我找不到使用场景，所以 setup 函数的返回值会被忽略。
 如果你对此有任何建议，你可以 [新建一个 Issue](https://github.com/Zolyn/pinia-class-transformer/issues/new/choose) 或 [发起一个讨论](https://github.com/Zolyn/pinia-class-transformer/discussions/new) 。
@@ -151,7 +151,7 @@ store.setup();
 然而, 在某些场景下, 你可能想要访问响应式变量本身，而不是它的值。
 你可以通过 `wrappedStore` 属性访问 “包装的 store” (没有了 [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/5de84d4cba3b83a07584a087acc4aec72e744263/src/utils.ts#L11) 的 store) 并在其中访问响应式变量形式的 State 和 Getters。
 
-这是一个在 [StoreFragment](#-state--storefragment) 中使用这个特性的例子。
+这是一个在 [StoreFragment](#使用-state--storefragment) 中使用这个特性的例子。
 
 ```typescript
 import { defineStore } from 'pinia';
@@ -182,7 +182,7 @@ const useMainStore = defineStore('main', transformClass(State, Fragment));
 export default useMainStore;
 ```
 
-如果你想在 [Store](#-store) 中使用这个特性，你需要导入 `Store` 类并且继承它。
+如果你想在 [Store](#使用-store) 中使用这个特性，你需要导入 `Store` 类并且继承它。
 
 ```typescript
 import { defineStore } from 'pinia';
@@ -210,7 +210,7 @@ const useMainStore = defineStore('main', transformClass(Main));
 export default useMainStore;
 ```
 
-**注:** 如果你在 [Store](#-store) 中使用这个特性，你可以会遇到类型提示方面的问题。详情查阅 [缺点](#storefragment--store) 。
+**注:** 如果你在 [Store](#使用-store) 中使用这个特性，你可以会遇到类型提示方面的问题。详情查阅 [缺点](#缺点) 。
 
 ## 项目内置类的类型
 
@@ -259,7 +259,7 @@ export default useMainStore;
 
 ### StoreFragment & Store
 
--   所有的 setters 都会被忽略。和 [setup 函数](#setup-) 的原因相同。请 [新建一个 Issue](https://github.com/Zolyn/pinia-class-transformer/issues/new/choose) 或 [发起一个讨论](https://github.com/Zolyn/pinia-class-transformer/discussions/new) 如果你对它有任何建议。
+-   所有的 setters 都会被忽略。和 [setup 函数](#setup-函数) 的原因相同。请 [新建一个 Issue](https://github.com/Zolyn/pinia-class-transformer/issues/new/choose) 或 [发起一个讨论](https://github.com/Zolyn/pinia-class-transformer/discussions/new) 如果你对它有任何建议。
 -   如果你用像 `private` 和 `protected` 的修饰符定义属性，你将不会获得类型提示。
 
 **提示:** 为了避免无法预料的类型问题，推荐显式地标注 Getters 和 Actions 的返回类型。

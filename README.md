@@ -2,6 +2,8 @@
 
 Transform classes to a [Setup Store](https://github.com/vuejs/pinia/issues/978) for Pinia.
 
+[中文文档](README.zh_CN.md)
+
 **NOTE:** I am trying to improve my English.
 If you find any problems with the documentation, PR is welcome :D
 
