@@ -327,3 +327,7 @@ If you're going to use it in a production environment, think carefully before us
 ## License
 
 [MIT](https://mit-license.org/)
+
+## References
+
+-   [vuex-smart-module](https://github.com/ktsn/vuex-smart-module) (Inspiration)

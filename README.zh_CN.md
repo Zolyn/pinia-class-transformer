@@ -324,3 +324,7 @@ Emmm.....这个项目实际上是写给我自己用的，所以我并不知道�
 ## 协议
 
 [MIT](https://mit-license.org/)
+
+## 参考项目
+
+-   [vuex-smart-module](https://github.com/ktsn/vuex-smart-module) （启发）
