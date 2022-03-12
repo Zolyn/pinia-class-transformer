@@ -230,7 +230,7 @@ A class which contains Getters and Actions.
 
 #### Properties
 
-| Modifiers   | Name           | Type                    | Description                                                                                          |
+| Modifier   | Name           | Type                    | Description                                                                                          |
 | :---------- | :------------- | :---------------------- | :--------------------------------------------------------------------------------------------------- |
 | `protected` | `state`        | `ExcludeFunc<S>`        | Properties that are not functions in the State class                                                 |
 | `protected` | `wrappedStore` | `TransformResult<S, F>` | the store without [Proxy](https://github.com/Zolyn/pinia-class-transformer/blob/v2/src/utils.ts#L11) |
