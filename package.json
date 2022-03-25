@@ -44,7 +44,7 @@
         "@typescript-eslint/eslint-plugin": "5.14.0",
         "@typescript-eslint/parser": "5.14.0",
         "chai": "4.3.6",
-        "dotenv-cli": "4.1.1",
+        "dotenv-cli": "5.1.0",
         "eslint": "7.32.0",
         "eslint-config-alloy": "4.5.1",
         "eslint-config-prettier": "8.5.0",
