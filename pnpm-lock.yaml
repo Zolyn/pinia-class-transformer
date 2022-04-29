@@ -4,7 +4,7 @@ specifiers:
   '@commitlint/cli': 12.1.4
   '@commitlint/config-conventional': 12.1.4
   '@microsoft/api-extractor': 7.23.0
-  '@release-it/conventional-changelog': 3.3.0
+  '@release-it/conventional-changelog': 4.3.0
   '@types/chai': 4.3.1
   '@types/mocha': 9.1.1
   '@typescript-eslint/eslint-plugin': 5.21.0
@@ -35,7 +35,7 @@ devDependencies:
   '@commitlint/cli': 12.1.4
   '@commitlint/config-conventional': 12.1.4
   '@microsoft/api-extractor': 7.23.0
-  '@release-it/conventional-changelog': 3.3.0_release-it@14.14.2
+  '@release-it/conventional-changelog': 4.3.0_release-it@14.14.2
   '@types/chai': 4.3.1
   '@types/mocha': 9.1.1
   '@typescript-eslint/eslint-plugin': 5.21.0_3f2b8947418667c394a050c1406f9730
@@ -451,16 +451,15 @@ packages:
       '@octokit/openapi-types': 11.2.0
     dev: true
 
-  /@release-it/conventional-changelog/3.3.0_release-it@14.14.2:
-    resolution: {integrity: sha512-pchCHf+wNpn15oj2hau4gisFKQat/01JuTzAwlGsQE83ZUBknU4dRlPA3xf5F5f3K70VVTQ3lx4/lgQvR+zxww==}
+  /@release-it/conventional-changelog/4.3.0_release-it@14.14.2:
+    resolution: {integrity: sha512-SAdattAPXyxADh+cWbNqlk7OBWh/SskYCj0hAb5VPmm/wrIR1dQrlKpsUQ/7O0WGGe7uhvj4YB8kVTIZipcc9w==}
     engines: {node: '>=10'}
     peerDependencies:
-      release-it: ^14.11.5
+      release-it: ^14.12.1
     dependencies:
       concat-stream: 2.0.0
       conventional-changelog: 3.1.25
       conventional-recommended-bump: 6.1.0
-      prepend-file: 2.0.1
       release-it: 14.14.2
     dev: true
 
@@ -3964,13 +3963,6 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prepend-file/2.0.1:
-    resolution: {integrity: sha512-0hXWjmOpz5YBIk6xujS0lYtCw6IAA0wCR3fw49UGTLc3E9BIhcxgqdMa8rzGvrtt2F8wFiGP42oEpQ8fo9zhRw==}
-    engines: {node: ^10.17 || >=11.14}
-    dependencies:
-      temp-write: 4.0.0
-    dev: true
-
   /prepend-http/2.0.0:
     resolution: {integrity: sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=}
     engines: {node: '>=4'}
@@ -4613,22 +4605,6 @@ packages:
       strip-ansi: 6.0.1
     dev: true
 
-  /temp-dir/1.0.0:
-    resolution: {integrity: sha1-CnwOom06Oa+n4OvqnB/AvE2qAR0=}
-    engines: {node: '>=4'}
-    dev: true
-
-  /temp-write/4.0.0:
-    resolution: {integrity: sha512-HIeWmj77uOOHb0QX7siN3OtwV3CTntquin6TNVg6SHOqCP3hYKmox90eeFOGaY1MqJ9WYDDjkyZrW6qS5AWpbw==}
-    engines: {node: '>=8'}
-    dependencies:
-      graceful-fs: 4.2.9
-      is-stream: 2.0.1
-      make-dir: 3.1.0
-      temp-dir: 1.0.0
-      uuid: 3.4.0
-    dev: true
-
   /text-extensions/1.9.0:
     resolution: {integrity: sha512-wiBrwC1EhBelW12Zy26JeOUkQ5mRu+5o8rpsJk5+2t+Y5vE7e842qtZDQ2g1NpX/29HdyFeJ4nSIhI47ENSxlQ==}
     engines: {node: '>=0.10'}
@@ -4875,12 +4851,6 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
-    dev: true
-
-  /uuid/3.4.0:
-    resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
-    hasBin: true
     dev: true
 
   /uuid/8.3.2:
