@@ -4,7 +4,7 @@ specifiers:
   '@commitlint/cli': 16.2.4
   '@commitlint/config-conventional': 16.2.4
   '@microsoft/api-extractor': 7.23.0
-  '@release-it/conventional-changelog': 3.3.0
+  '@release-it/conventional-changelog': 5.0.0
   '@types/chai': 4.3.1
   '@types/mocha': 9.1.1
   '@typescript-eslint/eslint-plugin': 5.21.0
@@ -35,7 +35,7 @@ devDependencies:
   '@commitlint/cli': 16.2.4
   '@commitlint/config-conventional': 16.2.4
   '@microsoft/api-extractor': 7.23.0
-  '@release-it/conventional-changelog': 3.3.0_release-it@14.14.2
+  '@release-it/conventional-changelog': 5.0.0_release-it@14.14.2
   '@types/chai': 4.3.1
   '@types/mocha': 9.1.1
   '@typescript-eslint/eslint-plugin': 5.21.0_3f2b8947418667c394a050c1406f9730
@@ -472,16 +472,15 @@ packages:
       '@octokit/openapi-types': 11.2.0
     dev: true
 
-  /@release-it/conventional-changelog/3.3.0_release-it@14.14.2:
-    resolution: {integrity: sha512-pchCHf+wNpn15oj2hau4gisFKQat/01JuTzAwlGsQE83ZUBknU4dRlPA3xf5F5f3K70VVTQ3lx4/lgQvR+zxww==}
-    engines: {node: '>=10'}
+  /@release-it/conventional-changelog/5.0.0_release-it@14.14.2:
+    resolution: {integrity: sha512-YAvGgxA8cIQSbmyHmAmLMwzCkNP74upLST8jFuDJTI+AVfK2Grp2HbZu0/NeV3sHYD20sT8YMzNVUeRxNlyHeg==}
+    engines: {node: '>=14'}
     peerDependencies:
-      release-it: ^14.11.5
+      release-it: ^15.0.0-esm.4
     dependencies:
       concat-stream: 2.0.0
       conventional-changelog: 3.1.25
       conventional-recommended-bump: 6.1.0
-      prepend-file: 2.0.1
       release-it: 14.14.2
     dev: true
 
@@ -668,7 +667,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.3.5
+      semver: 7.3.7
       tsutils: 3.21.0_typescript@4.6.4
       typescript: 4.6.4
     transitivePeerDependencies:
@@ -3996,13 +3995,6 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prepend-file/2.0.1:
-    resolution: {integrity: sha512-0hXWjmOpz5YBIk6xujS0lYtCw6IAA0wCR3fw49UGTLc3E9BIhcxgqdMa8rzGvrtt2F8wFiGP42oEpQ8fo9zhRw==}
-    engines: {node: ^10.17 || >=11.14}
-    dependencies:
-      temp-write: 4.0.0
-    dev: true
-
   /prepend-http/2.0.0:
     resolution: {integrity: sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=}
     engines: {node: '>=4'}
@@ -4653,22 +4645,6 @@ packages:
       strip-ansi: 6.0.1
     dev: true
 
-  /temp-dir/1.0.0:
-    resolution: {integrity: sha1-CnwOom06Oa+n4OvqnB/AvE2qAR0=}
-    engines: {node: '>=4'}
-    dev: true
-
-  /temp-write/4.0.0:
-    resolution: {integrity: sha512-HIeWmj77uOOHb0QX7siN3OtwV3CTntquin6TNVg6SHOqCP3hYKmox90eeFOGaY1MqJ9WYDDjkyZrW6qS5AWpbw==}
-    engines: {node: '>=8'}
-    dependencies:
-      graceful-fs: 4.2.9
-      is-stream: 2.0.1
-      make-dir: 3.1.0
-      temp-dir: 1.0.0
-      uuid: 3.4.0
-    dev: true
-
   /text-extensions/1.9.0:
     resolution: {integrity: sha512-wiBrwC1EhBelW12Zy26JeOUkQ5mRu+5o8rpsJk5+2t+Y5vE7e842qtZDQ2g1NpX/29HdyFeJ4nSIhI47ENSxlQ==}
     engines: {node: '>=0.10'}
@@ -4946,12 +4922,6 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
-    dev: true
-
-  /uuid/3.4.0:
-    resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
-    hasBin: true
     dev: true
 
   /uuid/8.3.2:
