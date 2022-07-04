@@ -10,7 +10,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': 5.24.0
   '@typescript-eslint/parser': 5.24.0
   chai: 4.3.6
-  dotenv-cli: 5.1.0
+  dotenv-cli: 6.0.0
   eslint: 7.32.0
   eslint-config-alloy: 4.5.1
   eslint-config-prettier: 8.5.0
@@ -41,7 +41,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.24.0_06aa5a5fbc4a1b79ee2e01d628b6f5a4
   '@typescript-eslint/parser': 5.24.0_eslint@7.32.0+typescript@4.6.4
   chai: 4.3.6
-  dotenv-cli: 5.1.0
+  dotenv-cli: 6.0.0
   eslint: 7.32.0
   eslint-config-alloy: 4.5.1
   eslint-config-prettier: 8.5.0_eslint@7.32.0
@@ -1722,8 +1722,8 @@ packages:
       is-obj: 2.0.0
     dev: true
 
-  /dotenv-cli/5.1.0:
-    resolution: {integrity: sha512-NoEZAlKo9WVrG0b3i9mBxdD6INdDuGqdgR74t68t8084QcI077/1MnPerRW1odl+9uULhcdnQp2U0pYVppKHOA==}
+  /dotenv-cli/6.0.0:
+    resolution: {integrity: sha512-qXlCOi3UMDhCWFKe0yq5sg3X+pJAz+RQDiFN38AMSbUrnY3uZshSfDJUAge951OS7J9gwLZGfsBlWRSOYz/TRg==}
     hasBin: true
     dependencies:
       cross-spawn: 7.0.3
