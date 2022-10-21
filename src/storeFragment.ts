@@ -1,6 +1,7 @@
-import { Actions, ExcludeFunc, Func, ReactiveGettersTree, ReactiveStateTree, TransformResult } from './types';
+import { StateTree, _ActionsTree, _GettersTree } from 'pinia';
 import { Class } from 'type-fest';
-import { _ActionsTree, _GettersTree, StateTree } from 'pinia';
+import { Store } from './store';
+import { Actions, ExcludeFunc, Func, TransformResult } from './types';
 
 /**
  * Store片段类
@@ -8,7 +9,7 @@ import { _ActionsTree, _GettersTree, StateTree } from 'pinia';
  * @public
  */
 class StoreFragment<S extends object, F extends object> {
-    protected state!: ExcludeFunc<S>;
+    protected state!: S; // TODO: ExcludeFunc<S> does not work
     protected wrappedStore!: TransformResult<S, F>;
 }
 
@@ -35,26 +36,35 @@ function _getStoreFragment<S extends object, F extends StoreFragment<S, F>>(Frag
     const getters: _GettersTree<StateTree> = {};
     let setup: Func | undefined;
 
+    let current = Fragment;
+
     // 获取Actions和Getters
-    Object.getOwnPropertyNames(Fragment.prototype).forEach((propertyName) => {
-        const descriptor = Object.getOwnPropertyDescriptor(Fragment.prototype, propertyName);
-        const getter = descriptor?.get;
-        const setter = descriptor?.set;
-        const func = descriptor?.value;
+    do {
+        Object.getOwnPropertyNames(current.prototype).forEach((propertyName) => {
+            const descriptor = Object.getOwnPropertyDescriptor(current.prototype, propertyName);
+            const getter = descriptor?.get;
+            const setter = descriptor?.set;
+            const func = descriptor?.value;
 
-        if (getter && !setter) {
-            getters[propertyName] = getter;
-        }
-
-        // 排除构造函数
-        if (typeof func === 'function' && func !== Fragment) {
-            if (func.name === 'setup') {
-                setup = func;
-            } else {
-                actions[propertyName] = func;
+            if (getter && !setter) {
+                getters[propertyName] = getter;
             }
-        }
-    });
+
+            // 排除构造函数
+            if (typeof func === 'function' && func !== current) {
+                if (func.name === 'setup') {
+                    if (!setup) setup = func;
+                } else {
+                    actions[propertyName] = func;
+                }
+            }
+        });
+    } while (
+        (current = Object.getPrototypeOf(current)) &&
+        current.prototype !== StoreFragment.prototype &&
+        current.prototype !== Store.prototype &&
+        current.prototype
+    );
 
     return { actions, getters, setup } as unknown as _Result<F>;
 }
