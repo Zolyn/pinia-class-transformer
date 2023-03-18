@@ -50,7 +50,7 @@
         "eslint-config-prettier": "8.5.0",
         "eslint-plugin-prettier": "3.4.1",
         "esno": "0.15.0",
-        "husky": "6.0.0",
+        "husky": "8.0.3",
         "lint-staged": "11.2.6",
         "mocha": "9.2.2",
         "pinia": "2.0.14",
