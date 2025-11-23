@@ -1,0 +1,47 @@
+{
+  "name": "pinia-class-transformer",
+  "version": "3.0.0",
+  "description": "Transform your classes to Pinia stores",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/Zolyn/pinia-class-transformer#readme",
+  "bugs": {
+    "url": "https://github.com/Zolyn/pinia-class-transformer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zolyn/pinia-class-transformer.git"
+  },
+  "author": "Yumeoto Zorin <zorin1477@gmail.com>",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "bumpp": "^10.3.1",
+    "tsdown": "^0.16.4",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.9"
+  },
+  "dependencies": {
+    "type-fest": "^5.2.0"
+  },
+  "peerDependencies": {
+    "pinia": "^3.0.4",
+    "vue": "^3.5.24"
+  }
+}
