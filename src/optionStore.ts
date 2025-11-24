@@ -1,6 +1,7 @@
 import { defineStore, type StoreDefinition } from "pinia";
 import type { ActionsTree, Method, StateTree, GettersTree } from "./types/shared";
 import type { Class } from "type-fest";
+import { getAllDescriptors } from "./utils";
 
 function buildState<S extends object>(storeClass: Class<S>) {
     const storeInstance = new storeClass();
@@ -18,7 +19,7 @@ function buildState<S extends object>(storeClass: Class<S>) {
 function buildGettersAndActions<S extends object>(storeClass: Class<S>) {
     const getters: Record<string, Method> = {};
     const actions: Record<string, Method> = {};
-    const protoDescriptors = Object.getOwnPropertyDescriptors(storeClass.prototype);
+    const protoDescriptors = getAllDescriptors(storeClass.prototype);
 
     for (const key in protoDescriptors) {
         if (key === 'constructor') {

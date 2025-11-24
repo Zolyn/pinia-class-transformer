@@ -2,6 +2,7 @@ import { defineStore, type StoreDefinition } from "pinia";
 import type { Class } from "type-fest";
 import { type Ref, ref, type ComputedRef, computed, reactive } from "vue";
 import type { ActionsTree, Method, StateTree, GettersTree } from "./types/shared";
+import { getAllDescriptors } from "./utils";
 
 function transformClass<S extends object>(storeClass: Class<S>) {
     const result: Record<string, Ref | ComputedRef | Method> = {};
@@ -9,19 +10,19 @@ function transformClass<S extends object>(storeClass: Class<S>) {
     let setupFn: Method | undefined;
 
     const instance = new storeClass();
-    const instance_descriptors = Object.getOwnPropertyDescriptors(instance);
-    for (const key in instance_descriptors) {
-        const desc = instance_descriptors[key];
+    const instanceDescriptors = Object.getOwnPropertyDescriptors(instance);
+    for (const key in instanceDescriptors) {
+        const desc = instanceDescriptors[key];
         result[key]  = ref(desc.value)
     }
 
-    const proto_descriptors = Object.getOwnPropertyDescriptors(storeClass.prototype);
-    for (const key in proto_descriptors) {
+    const protoDescriptors = getAllDescriptors(storeClass.prototype);
+    for (const key in protoDescriptors) {
         if (key === 'constructor') {
             continue;
         }
 
-        const desc = proto_descriptors[key];
+        const desc = protoDescriptors[key];
         const getter = desc.get;
         const setter = desc.set;
         const method = desc.value;

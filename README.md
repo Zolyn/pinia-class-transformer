@@ -2,7 +2,6 @@
 Transform your classes to Pinia stores
 
 ## TODO
-- class extends
 - writable computed for setup store
 - passing extra options to `defineStore()`
 - Merge return value of `setup()`
