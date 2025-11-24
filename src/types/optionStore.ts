@@ -1,8 +1,5 @@
-import type { ConditionalExcept, ConditionalPick, ReadonlyKeysOf } from "type-fest";
-
-type Method = (...args: any[]) => any;
-
-type ActionsTree<S> = ConditionalPick<S, Method>;
+import type { ConditionalExcept, ReadonlyKeysOf } from "type-fest";
+import type { Method } from "./shared";
 
 type DataTree<S> = ConditionalExcept<S, Method>
 
@@ -15,9 +12,8 @@ type GettersTree<S> = {
 }
 
 export type {
-    Method,
-    ActionsTree,
     DataTree,
+    GetterKeys,
     StateTree,
     GettersTree
 }

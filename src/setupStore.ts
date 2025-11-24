@@ -1,0 +1,68 @@
+import { defineStore } from "pinia";
+import type { Class } from "type-fest";
+import { type Ref, ref, type ComputedRef, computed, reactive } from "vue";
+import type { Method } from "./types/shared";
+
+function transformClass<S extends object>(storeClass: Class<S>) {
+    const result: Record<string, Ref | ComputedRef | Method> = {};
+    const unwrap_proxy = reactive(result);
+    let setupFn: Method | undefined;
+
+    const instance = new storeClass();
+    const instance_descriptors = Object.getOwnPropertyDescriptors(instance);
+    for (const key in instance_descriptors) {
+        const desc = instance_descriptors[key];
+        result[key]  = ref(desc.value)
+    }
+
+    const proto_descriptors = Object.getOwnPropertyDescriptors(storeClass.prototype);
+    for (const key in proto_descriptors) {
+        if (key === 'constructor') {
+            continue;
+        }
+
+        const desc = proto_descriptors[key];
+        const getter = desc.get;
+        const setter = desc.set;
+        const method = desc.value;
+
+        if (getter && !setter) {
+            result[key] = computed(getter.bind(unwrap_proxy))
+            continue
+        }
+
+        if (typeof method === 'function') {
+            if (key === 'setup') {
+               setupFn = method;
+               continue
+            }
+            
+            result[key] = method
+        }
+    }
+
+    if (setupFn) {
+        setupFn.call(unwrap_proxy)
+    }
+    
+    return result
+}
+
+// export function defineSetupStore<S extends object>(storeClass: Class<S>)
+
+// export function defineSetupStore<S extends object>(id: string, storeClass: Class<S>)
+
+export function defineSetupStore<S extends object>(idOrClass: string | Class<S>, _storeClass?: Class<S>) {
+    let id: string;
+    let storeClass: Class<S>;
+
+    if (typeof idOrClass === 'string') {
+        id = idOrClass;
+        storeClass = _storeClass!;
+    } else {
+        id = idOrClass.name;
+        storeClass = idOrClass;
+    }
+
+    return defineStore(id, () => transformClass(storeClass))
+}

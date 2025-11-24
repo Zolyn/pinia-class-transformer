@@ -1,2 +1,2 @@
-export { defineClassStore } from './transform';
-export * from './types';
+export { defineOptionStore } from './optionStore';
+export { defineSetupStore } from './setupStore';
