@@ -1,7 +1,7 @@
 import { defineStore, type StoreDefinition } from "pinia";
+import { getAllDescriptors } from "./utils";
 import type { ActionsTree, Method, StateTree, GettersTree } from "./types/shared";
 import type { Class } from "type-fest";
-import { getAllDescriptors } from "./utils";
 
 function buildState<S extends object>(storeClass: Class<S>) {
     const storeInstance = new storeClass();
@@ -44,7 +44,7 @@ function buildGettersAndActions<S extends object>(storeClass: Class<S>) {
     return { getters, actions };
 }
 
-type OptionStore<S extends object> = StoreDefinition<string, StateTree<S>, GettersTree<S>, ActionsTree<S>>;
+export type OptionStore<S extends object> = StoreDefinition<string, StateTree<S>, GettersTree<S>, ActionsTree<S>>;
 
 export function defineOptionStore<S extends object>(storeClass: Class<S>): OptionStore<S>;
 
