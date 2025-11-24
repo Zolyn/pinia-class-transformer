@@ -1,6 +1,5 @@
 import { defineStore, type StoreDefinition } from "pinia";
-import type { ActionsTree, Method } from "./types/shared";
-import type { StateTree, GettersTree } from "./types/optionStore";
+import type { ActionsTree, Method, StateTree, GettersTree } from "./types/shared";
 import type { Class } from "type-fest";
 
 function buildState<S extends object>(storeClass: Class<S>) {

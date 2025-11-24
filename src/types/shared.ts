@@ -1,10 +1,24 @@
-import type { ConditionalPick } from "type-fest";
+import type { ConditionalPick, ConditionalExcept, ReadonlyKeysOf } from "type-fest";
 
 type Method = (...args: any[]) => any;
 
 type ActionsTree<S> = ConditionalPick<S, Method>;
 
+type DataTree<S> = ConditionalExcept<S, Method>
+
+type GetterKeys<S> = ReadonlyKeysOf<DataTree<S>>
+
+type StateTree<S> = Omit<DataTree<S>, GetterKeys<S>>;
+
+type GettersTree<S> = {
+    [K in GetterKeys<S>]: () => DataTree<S>[K]
+}
+
 export type {
     Method,
-    ActionsTree
+    ActionsTree,
+    DataTree,
+    GetterKeys,
+    StateTree,
+    GettersTree
 }
