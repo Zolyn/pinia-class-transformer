@@ -1,8 +1,9 @@
 import { defineStore, type StoreDefinition } from "pinia";
-import type { Class } from "type-fest";
+import type { Class, Merge } from "type-fest";
 import { type Ref, ref, type ComputedRef, computed, reactive } from "vue";
 import type { ActionsTree, Method, StateTree, GettersTree } from "./types/shared";
 import { getAllDescriptors } from "./utils";
+import type { SetupActions, SetupGetters, SetupState } from "./types/setup";
 
 function transformClass<S extends object>(storeClass: Class<S>) {
     const result: Record<string, Ref | ComputedRef | Method> = {};
@@ -43,15 +44,21 @@ function transformClass<S extends object>(storeClass: Class<S>) {
     }
 
     if (setupFn) {
-        setupFn.call(unwrapProxy)
+        const setupResult = setupFn.call(unwrapProxy);
+
+        if (setupResult && typeof setupResult === 'object') {
+            Object.assign(result, setupResult)
+        }
     }
     
     return result
 }
 
-export function defineSetupStore<S extends object>(storeClass: Class<S>): StoreDefinition<string, StateTree<S>, GettersTree<S>, Omit<ActionsTree<S>, 'setup'>>
+type SetupStore<S extends object> = StoreDefinition<string, Merge<StateTree<S>, SetupState<S>>, Merge<GettersTree<S>, SetupGetters<S>>, Merge<ActionsTree<S>, SetupActions<S>>>;
 
-export function defineSetupStore<S extends object>(id: string, storeClass: Class<S>): StoreDefinition<string, StateTree<S>, GettersTree<S>, Omit<ActionsTree<S>, 'setup'>>
+export function defineSetupStore<S extends object>(storeClass: Class<S>): SetupStore<S>
+
+export function defineSetupStore<S extends object>(id: string, storeClass: Class<S>): SetupStore<S>
 
 export function defineSetupStore<S extends object>(idOrClass: string | Class<S>, _storeClass?: Class<S>) {
     let id: string;

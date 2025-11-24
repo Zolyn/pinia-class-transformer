@@ -44,9 +44,11 @@ function buildGettersAndActions<S extends object>(storeClass: Class<S>) {
     return { getters, actions };
 }
 
-export function defineOptionStore<S extends object>(storeClass: Class<S>): StoreDefinition<string, StateTree<S>, GettersTree<S>, ActionsTree<S>>;
+type OptionStore<S extends object> = StoreDefinition<string, StateTree<S>, GettersTree<S>, ActionsTree<S>>;
 
-export function defineOptionStore<S extends object>(id: string, storeClass: Class<S>): StoreDefinition<string, StateTree<S>, GettersTree<S>, ActionsTree<S>>;
+export function defineOptionStore<S extends object>(storeClass: Class<S>): OptionStore<S>;
+
+export function defineOptionStore<S extends object>(id: string, storeClass: Class<S>): OptionStore<S>;
 
 export function defineOptionStore<S extends object>(idOrClass: string | Class<S>, _storeClass?: Class<S>) {
     let id: string;
