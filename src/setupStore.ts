@@ -28,11 +28,6 @@ function transformClass<S extends object>(storeClass: Class<S>) {
         const setter = desc.set;
         const method = desc.value;
 
-        if (getter && !setter) {
-            result[key] = computed(getter.bind(unwrapProxy))
-            continue
-        }
-
         if (typeof method === 'function') {
             if (key === 'setup') {
                setupFn = method;
@@ -40,6 +35,20 @@ function transformClass<S extends object>(storeClass: Class<S>) {
             }
             
             result[key] = method
+            continue
+        }
+        
+        if (!getter) {
+            continue
+        }
+
+        if (!setter) {
+            result[key] = computed(getter.bind(unwrapProxy))
+        } else {
+            result[key] = computed({
+                get: getter.bind(unwrapProxy),
+                set: setter.bind(unwrapProxy)
+            })
         }
     }
 
