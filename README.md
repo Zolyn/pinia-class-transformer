@@ -38,11 +38,11 @@ const useMyStore = defineSetupStore(MyStore);
 
 `defineOptionStore()` is the recommended, stable way to convert your class. It maps your class directly to a Pinia Options Store. It is lightweight and covers most use cases.
 
-`defineSetupStore()` offers more flexibility, allowing the use of Composables and complex setup logic. It scans your class, creates ref and computed, binds computed to a reactive proxy, runs your custom `setup()` function, and assembles everything into a Setup Store. **Note that this might have minor compatibility differences with some Pinia plugins compared to the `defineOptionStore()`.**
+`defineSetupStore()` offers more flexibility but might have minor compatibility differences with some Pinia plugins compared to the `defineOptionStore()`.**
 
 ### Using composables in `setup()`
 
-If you need to run some custom logic involving **Composables** (e.g. `watch`, `watchEffect`) after initialization of states and getters, use `defineSetupStore()` and define a `setup()` function in your class.
+You can define a `setup()` function in your class if you need to run some custom logic involving **Composables** (e.g. `watch`, `watchEffect`) after initialization of states and getters.
 
 For `defineSetupStore()`, the return value of `setup()` will be merged into the store.
 
