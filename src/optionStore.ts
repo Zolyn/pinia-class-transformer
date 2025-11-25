@@ -45,7 +45,7 @@ function buildGettersAndActions<S extends object>(storeClass: Class<S>) {
                 setupFn = method;
                 continue;
             }
-            
+
             actions[key] = method
         }
     }

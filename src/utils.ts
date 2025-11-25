@@ -13,6 +13,6 @@ export function getAllDescriptors(proto: object): Record<string, PropertyDescrip
 
         currentProto = Object.getPrototypeOf(currentProto);
     }
-    
+
     return descriptors;
 }

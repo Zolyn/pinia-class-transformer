@@ -22,7 +22,7 @@ function transformClass<S extends object>(id: string, storeClass: Class<S>) {
     const instanceDescriptors = Object.getOwnPropertyDescriptors(instance);
     for (const key in instanceDescriptors) {
         const desc = instanceDescriptors[key];
-        result[key]  = ref(desc.value)
+        result[key] = ref(desc.value)
     }
 
     const protoDescriptors = getAllDescriptors(storeClass.prototype);
@@ -38,14 +38,14 @@ function transformClass<S extends object>(id: string, storeClass: Class<S>) {
 
         if (typeof method === 'function') {
             if (key === 'setup') {
-               setupFn = method;
-               continue
+                setupFn = method
+                continue
             }
-            
+
             result[key] = method
             continue
         }
-        
+
         if (!getter) {
             continue
         }
