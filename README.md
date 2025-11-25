@@ -38,7 +38,7 @@ const useMyStore = defineSetupStore(MyStore);
 
 `defineOptionStore()` is the recommended, stable way to convert your class. It maps your class directly to a Pinia Options Store. It is lightweight and covers most use cases.
 
-`defineSetupStore()` offers more flexibility but might have minor compatibility differences with some Pinia plugins compared to the `defineOptionStore()`.**
+`defineSetupStore()` offers more flexibility but might have minor compatibility differences with some Pinia plugins compared to the `defineOptionStore()`.\*\*
 
 ### Using composables in `setup()`
 
@@ -145,8 +145,8 @@ This table might help you make a decision.
 | :------------------------- | :--------------------------------------- | :---------------------------------------------------------------------------------- |
 | **Underlying Pinia API**   | Options API (`defineStore(id, { ... })`) | Setup API (`defineStore(id, () => { ... })`)                                        |
 | **`setup()` return value** | Ignored. Use for side effects only.      | Merged into the store. Can add new state/getters/actions or override existing ones. |
-| **Writable Computed**      | ❌ Not supported                         | ✅ Supported                                                                        |
-| **`$reset()`**             | ✅ Supported                             | ❌ Not supported (You need to implement it manually)                                |
+| **Writable Computed**      | Not supported                            | Supported                                                                           |
+| **`$reset()`**             | Supported                                | Not supported (You need to implement it manually)                                   |
 | **Best for...**            | Simple stores, needing `$reset()`        | Complex logic, heavy use of Composables, needing writable computed properties       |
 
 ## Future Improvements
