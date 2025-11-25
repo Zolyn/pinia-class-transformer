@@ -74,20 +74,42 @@ const useMyStore = defineOptionStore(MyStore)
 const useMyStore = defineSetupStore(MyStore)
 ```
 
-### Accessing Pinia's property
-You can use `useContext()` to access Pinia's property in your class if needed.
+### Accessing Pinia's properties
+You can use helper functions to access Pinia's properties and plugin-injected properties in your class.
+
+#### In Actions
+Use `useContext()` to access the full Store instance, including `$patch`, `$reset`, `$state`, and plugin-injected properties.
 
 ```typescript
+import { useContext } from 'pinia-class-transformer';
+
 class MyStore {
-    count = 1
-    state() {
-        return useContext(this).$state
+    count = 1;
+    
+    reset() {
+        useContext(this).$reset();
+    }
+    
+    update() {
+        useContext(this).$patch({ count: 10 });
     }
 }
+```
 
-const useMyStore = defineOptionStore(MyStore)
-// or
-const useMyStore = defineSetupStore(MyStore)
+#### In Getters
+Use `useGetterContext(this)` to access **only** plugin-injected properties
+
+```typescript
+import { useGetterContext } from 'pinia-class-transformer';
+
+class MyStore {
+    get isLoading() {
+        // Refer to: Fuphoenixes/piniaPluginLoading
+        return this.$loading.fetchData
+    }
+
+    async fetchData() { /* ... */ }
+}
 ```
 
 ## TODO
