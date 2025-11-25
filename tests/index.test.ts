@@ -238,7 +238,7 @@ describe('Pinia property accessing', () => {
     const pinia = getActiveTestingPinia();
     pinia.use(() => ({ $test: 'test' }))
 
-    const useStore = defineSetupStore(Store);
+    const useStore = defineFn(Store);
     const store = useStore();
     expect(store.a).toBe('test');
   }))
