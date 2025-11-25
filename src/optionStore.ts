@@ -3,6 +3,8 @@ import { getAllDescriptors } from "./utils";
 import type { ActionsTree, Method, StateTree, GettersTree } from "./types/shared";
 import type { Class } from "type-fest";
 
+const SETUP_CALLED = Symbol('setupCalled');
+
 function buildState<S extends object>(storeClass: Class<S>) {
     const storeInstance = new storeClass();
     const state: Record<string, any> = {};
@@ -19,6 +21,8 @@ function buildState<S extends object>(storeClass: Class<S>) {
 function buildGettersAndActions<S extends object>(storeClass: Class<S>) {
     const getters: Record<string, Method> = {};
     const actions: Record<string, Method> = {};
+    let setupFn: Method | undefined;
+
     const protoDescriptors = getAllDescriptors(storeClass.prototype);
 
     for (const key in protoDescriptors) {
@@ -37,11 +41,16 @@ function buildGettersAndActions<S extends object>(storeClass: Class<S>) {
         }
 
         if (typeof method === 'function') {
+            if (key === 'setup') {
+                setupFn = method;
+                continue;
+            }
+            
             actions[key] = method
         }
     }
 
-    return { getters, actions };
+    return { getters, actions, setupFn };
 }
 
 export type OptionStore<S extends object> = StoreDefinition<string, StateTree<S>, GettersTree<S>, ActionsTree<S>>;
@@ -62,11 +71,29 @@ export function defineOptionStore<S extends object>(idOrClass: string | Class<S>
         storeClass = idOrClass;
     }
 
-    const { getters, actions } = buildGettersAndActions(storeClass);
+    const { getters, actions, setupFn } = buildGettersAndActions(storeClass);
 
-    return defineStore(id, {
+    const useStore = defineStore(id, {
         state: () => buildState(storeClass),
         getters,
         actions
     } as any);
+
+    if (setupFn) {
+        function wrappedUseStore(...args: any[]) {
+            const store = useStore(...args);
+
+            if (!(store as any)[SETUP_CALLED]) {
+                (store as any)[SETUP_CALLED] = true;
+                setupFn!.call(store);
+            }
+
+            return store;
+        }
+
+        wrappedUseStore.$id = useStore.$id;
+        return wrappedUseStore;
+    }
+
+    return useStore;
 }
