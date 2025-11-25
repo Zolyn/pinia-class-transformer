@@ -3,7 +3,7 @@ import { getAllDescriptors } from "./utils";
 import type { ActionsTree, Method, StateTree, GettersTree } from "./types/shared";
 import type { Class } from "type-fest";
 
-const SETUP_CALLED = Symbol('setupCalled');
+const SETUP_CALLED = Symbol();
 
 function buildState<S extends object>(storeClass: Class<S>) {
     const storeInstance = new storeClass();

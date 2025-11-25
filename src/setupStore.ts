@@ -15,7 +15,7 @@ function getRuntimePinia() {
 
 function transformClass<S extends object>(id: string, storeClass: Class<S>) {
     const result: Record<string, Ref | ComputedRef | Method> = {};
-    const store = getRuntimePinia()!._s.get(id);
+    const store = getRuntimePinia()!._s.get(id)!;
     let setupFn: Method | undefined;
 
     const instance = new storeClass();
@@ -61,6 +61,9 @@ function transformClass<S extends object>(id: string, storeClass: Class<S>) {
             })
         }
     }
+
+    // Pre-assign the store with the result so that `this` is available in `setup()`
+    Object.assign(store, result);
 
     if (setupFn) {
         const setupResult = setupFn.call(store);

@@ -112,25 +112,23 @@ describe('Inheritance', () => {
   }))
 })
 
-describe('Option Store', () => {
-  test('setup function', () => {
-    const fn = vi.fn();
+describe('Setup function with no return value', createSharedTest((defineFn) => {
+  const fn = vi.fn();
 
-    class Store {
-      count = 1;
-      setup() {
-        watchEffect(() => fn(this.count), { flush: 'sync' })
-      }
+  class Store {
+    count = 1;
+    setup() {
+      watchEffect(() => fn(this.count), { flush: 'sync' })
     }
+  }
 
-    const useStore = defineOptionStore(Store);
-    const store = useStore();
+  const useStore = defineFn(Store);
+  const store = useStore();
 
-    expect(fn).toHaveBeenCalledTimes(1);
-    store.count++;
-    expect(fn).toHaveBeenCalledTimes(2);
-  })
-})
+  expect(fn).toHaveBeenCalledTimes(1);
+  store.count++;
+  expect(fn).toHaveBeenCalledTimes(2);
+}))
 
 describe('Setup Store', () => {
   test('Writable computed', () => {
