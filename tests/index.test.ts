@@ -1,18 +1,39 @@
-import { computed } from 'vue'
-import { createPinia, setActivePinia } from 'pinia'
-import { beforeEach, expect, test, describe } from 'vitest'
+import { computed, watchEffect } from 'vue'
+import { beforeEach, expect, test, describe, vi } from 'vitest'
+import { createPinia, getActivePinia, Pinia, PiniaPlugin, setActivePinia, StoreGeneric } from 'pinia'
 import { defineOptionStore, defineSetupStore, useContext } from '../src'
 import type { SetupStore } from '../src/setupStore'
 import type { OptionStore } from '../src/optionStore'
 import type { Class } from 'type-fest'
+import { StateTree } from '../src/types/shared'
 
 beforeEach(() => setActivePinia(createPinia()))
+
+type TestingPinia = Pinia & {
+  _p: PiniaPlugin[];
+  _s: Map<string, StoreGeneric>
+}
+
+function getActiveTestingPinia(): TestingPinia {
+  const pinia = getActivePinia() as TestingPinia | undefined;
+
+  if (!pinia) {
+    throw new Error('No active pinia found');
+  }
+
+  pinia.use = function (plugin: PiniaPlugin) {
+    this._p.push(plugin);
+    return this
+  }
+
+  return pinia
+}
 
 type SetupStoreFn = <S extends object>(storeClass: Class<S>) => SetupStore<S>
 type OptionStoreFn = <S extends object>(storeClass: Class<S>) => OptionStore<S>
 
-function runSharedTest(testFn: (defineFn: SetupStoreFn | OptionStoreFn) => void) {
-  test.each([
+function createSharedTest(testFn: (defineFn: SetupStoreFn | OptionStoreFn) => void) {
+  return () => test.each([
     ['Option', defineOptionStore],
     ['Setup', defineSetupStore]
   ])('%s', (_, defineFn) => {
@@ -20,23 +41,25 @@ function runSharedTest(testFn: (defineFn: SetupStoreFn | OptionStoreFn) => void)
   })
 }
 
-describe('Simple store', () => {
-  runSharedTest((defineFn) => {
-    class Store {
-      count = 1;
-      get double() { return this.count * 2 }
-      inc() { this.count++ }
-    }
-    const useStore = defineFn(Store);
-    const store = useStore();
+function runSharedTest(testFn: (defineFn: SetupStoreFn | OptionStoreFn) => void) {
+  createSharedTest(testFn)()
+}
 
-    expect(store.count).toBe(1);
-    expect(store.double).toBe(2);
-    store.inc();
-    expect(store.count).toBe(2);
-    expect(store.double).toBe(4);
-  })
-})
+describe('Simple store', createSharedTest((defineFn) => {
+  class Store {
+    count = 1;
+    get double() { return this.count * 2 }
+    inc() { this.count++ }
+  }
+  const useStore = defineFn(Store);
+  const store = useStore();
+
+  expect(store.count).toBe(1);
+  expect(store.double).toBe(2);
+  store.inc();
+  expect(store.count).toBe(2);
+  expect(store.double).toBe(4);
+}))
 
 describe('Inheritance', () => {
   runSharedTest((defineFn) => {
@@ -66,28 +89,46 @@ describe('Inheritance', () => {
     expect(store.childCount).toBe(3);
   })
 
-  describe('Override', () => {
-    runSharedTest((defineFn) => {
-      class Base {
-        baseCount = 1;
-        baseAction() {
-          this.baseCount++
-        }
+  describe('Override', createSharedTest((defineFn) => {
+    class Base {
+      baseCount = 1;
+      baseAction() {
+        this.baseCount++
       }
-      class Store extends Base {
-        baseCount = 2;
-        baseAction() {
-          this.baseCount *= 2
-        }
+    }
+    class Store extends Base {
+      baseCount = 2;
+      baseAction() {
+        this.baseCount *= 2
       }
+    }
 
-      const useStore = defineFn(Store);
-      const store = useStore();
+    const useStore = defineFn(Store);
+    const store = useStore();
 
-      expect(store.baseCount).toBe(2);
-      store.baseAction();
-      expect(store.baseCount).toBe(4);
-    })
+    expect(store.baseCount).toBe(2);
+    store.baseAction();
+    expect(store.baseCount).toBe(4);
+  }))
+})
+
+describe('Option Store', () => {
+  test('setup function', () => {
+    const fn = vi.fn();
+
+    class Store {
+      count = 1;
+      setup() {
+        watchEffect(() => fn(this.count), { flush: 'sync' })
+      }
+    }
+
+    const useStore = defineOptionStore(Store);
+    const store = useStore();
+
+    expect(fn).toHaveBeenCalledTimes(1);
+    store.count++;
+    expect(fn).toHaveBeenCalledTimes(2);
   })
 })
 
@@ -146,17 +187,61 @@ describe('Setup Store', () => {
 })
 
 describe('Pinia property accessing', () => {
-  runSharedTest((defineFn) => {
+  describe('Common properties', createSharedTest((defineFn) => {
     class Store {
       count = 1;
-      f() {
-        return useContext(this).$state
+      get f(): number {
+        return useContext<Store>(this).$state.count
+      }
+      increasetByPatching() {
+        useContext<Store>(this).$patch({ count: this.count + 1 })
       }
     }
+
+    type A = StateTree<Store>
 
     const useStore = defineFn(Store);
     const store = useStore();
 
-    expect(store.f().count).toBe(1);
+    expect(store.f).toBe(1);
+    store.increasetByPatching();
+    expect(store.f).toBe(2);
+  }))
+
+  test('$reset (Option only)', () => {
+    class Store {
+      count = 1;
+      increment() {
+        this.count++
+      }
+      reset() {
+        useContext(this).$reset()
+      }
+    }
+
+    const useStore = defineOptionStore(Store);
+    const store = useStore();
+
+    expect(store.count).toBe(1);
+    store.increment();
+    expect(store.count).toBe(2);
+    store.reset();
+    expect(store.count).toBe(1);
   })
+
+  describe('Custom property', createSharedTest((defineFn) => {
+    class Store {
+      count = 1;
+      get a() {
+        return (this as any).$test
+      }
+    }
+
+    const pinia = getActiveTestingPinia();
+    pinia.use(() => ({ $test: 'test' }))
+
+    const useStore = defineSetupStore(Store);
+    const store = useStore();
+    expect(store.a).toBe('test');
+  }))
 })

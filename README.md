@@ -77,6 +77,8 @@ const useMyStore = defineSetupStore(MyStore)
 ### Accessing Pinia's properties
 You can use helper functions to access Pinia's properties and plugin-injected properties in your class.
 
+**NOTE**: If you encounter type errors, try manually passing the Store type to the helper functions.
+
 #### In Actions
 Use `useContext()` to access the full Store instance, including `$patch`, `$reset`, `$state`, and plugin-injected properties.
 
@@ -91,7 +93,7 @@ class MyStore {
     }
     
     update() {
-        useContext(this).$patch({ count: 10 });
+        useContext<Store>(this).$patch({ count: 10 });
     }
 }
 ```
@@ -103,14 +105,16 @@ Use `useGetterContext(this)` to access **only** plugin-injected properties
 import { useGetterContext } from 'pinia-class-transformer';
 
 class MyStore {
-    get isLoading() {
+    get isLoading(): boolean {
         // Refer to: Fuphoenixes/piniaPluginLoading
-        return this.$loading.fetchData
+        return useGetterContext<Store>(this).$loading.fetchData
     }
 
     async fetchData() { /* ... */ }
 }
 ```
+
+**NOTE**: If you return the value accessed from `useGetterContext()`, you need to explicitly mark the return type.
 
 ## TODO
 - passing extra options to `defineStore()`
