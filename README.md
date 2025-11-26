@@ -38,7 +38,7 @@ const useMyStore = defineSetupStore(MyStore);
 
 `defineOptionStore()` is the recommended, stable way to convert your class. It maps your class directly to a Pinia Options Store. It is lightweight and covers most use cases.
 
-`defineSetupStore()` offers more flexibility but might have minor compatibility differences with some Pinia plugins compared to the `defineOptionStore()`.\*\*
+`defineSetupStore()` offers more flexibility but might have minor compatibility differences with some Pinia plugins compared to the `defineOptionStore()`.
 
 ### Using composables in `setup()`
 
