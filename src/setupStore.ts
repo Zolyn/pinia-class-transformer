@@ -1,4 +1,4 @@
-import { defineStore, getActivePinia, type DefineStoreOptions, type Pinia, type StoreDefinition, type StoreGeneric } from "pinia";
+import { defineStore, getActivePinia, type DefineSetupStoreOptions, type Pinia, type StoreDefinition, type StoreGeneric } from "pinia";
 import { type Ref, ref, type ComputedRef, computed } from "vue";
 import { getAllDescriptors } from "./utils";
 import type { Class, Merge } from "type-fest";
@@ -77,7 +77,7 @@ function transformClass<S extends object>(id: string, storeClass: Class<S>) {
 }
 
 export type SetupStore<S extends object> = StoreDefinition<string, Merge<StateTree<S>, SetupState<S>>, Merge<GettersTree<S>, SetupGetters<S>>, Merge<ActionsTree<S>, SetupActions<S>>>;
-export type DefineSetupOptions<S extends object> = DefineStoreOptions<string, Merge<StateTree<S>, SetupState<S>>, Merge<GettersTree<S>, SetupGetters<S>>, Merge<ActionsTree<S>, SetupActions<S>>>;
+export type DefineSetupOptions<S extends object> = DefineSetupStoreOptions<string, Merge<StateTree<S>, SetupState<S>>, Merge<GettersTree<S>, SetupGetters<S>>, Merge<ActionsTree<S>, SetupActions<S>>>;
 
 export function defineSetupStore<S extends object>(storeClass: Class<S>, options?: DefineSetupOptions<S>): SetupStore<S>
 
