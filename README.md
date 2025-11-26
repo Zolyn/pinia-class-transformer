@@ -153,7 +153,6 @@ This table might help you make a decision.
 
 - Inject fake context using `Symbol` for type intellisense
 - Call `action` wrapper when pre-assigning actions
-- passing extra options to `defineStore()`
 
 ## License
 

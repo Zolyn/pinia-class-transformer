@@ -289,7 +289,6 @@ describe(
     class Store {
       count = 1;
       setup() {
-        console.log(this.count);
         fn();
       }
     }

@@ -1,4 +1,4 @@
-import { defineStore, type StoreDefinition } from "pinia";
+import { defineStore, type DefineStoreOptions, type StoreDefinition } from "pinia";
 import { getAllDescriptors } from "./utils";
 import type { ActionsTree, Method, StateTree, GettersTree } from "./types/shared";
 import type { Class } from "type-fest";
@@ -54,21 +54,25 @@ function buildGettersAndActions<S extends object>(storeClass: Class<S>) {
 }
 
 export type OptionStore<S extends object> = StoreDefinition<string, StateTree<S>, GettersTree<S>, ActionsTree<S>>;
+export type DefineOptions<S extends object> = DefineStoreOptions<string, StateTree<S>, GettersTree<S>, ActionsTree<S>>;
 
-export function defineOptionStore<S extends object>(storeClass: Class<S>): OptionStore<S>;
+export function defineOptionStore<S extends object>(storeClass: Class<S>, options?: DefineOptions<S>): OptionStore<S>;
 
-export function defineOptionStore<S extends object>(id: string, storeClass: Class<S>): OptionStore<S>;
+export function defineOptionStore<S extends object>(id: string, storeClass: Class<S>, options?: DefineOptions<S>): OptionStore<S>;
 
-export function defineOptionStore<S extends object>(idOrClass: string | Class<S>, _storeClass?: Class<S>) {
+export function defineOptionStore<S extends object>(idOrClass: string | Class<S>, classOrOptions?: Class<S> | DefineOptions<S>, _options?: DefineOptions<S>) {
     let id: string;
     let storeClass: Class<S>;
+    let options: DefineOptions<S> | undefined;
 
     if (typeof idOrClass === 'string') {
         id = idOrClass;
-        storeClass = _storeClass!;
+        storeClass = classOrOptions! as Class<S>;
+        options = _options;
     } else {
         id = idOrClass.name;
         storeClass = idOrClass;
+        options = classOrOptions as DefineOptions<S> | undefined;
     }
 
     const { getters, actions, setupFn } = buildGettersAndActions(storeClass);
@@ -76,7 +80,8 @@ export function defineOptionStore<S extends object>(idOrClass: string | Class<S>
     const useStore = defineStore(id, {
         state: () => buildState(storeClass),
         getters,
-        actions
+        actions,
+        ...options
     } as any);
 
     if (setupFn) {

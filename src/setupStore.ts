@@ -1,4 +1,4 @@
-import { defineStore, getActivePinia, type Pinia, type StoreDefinition, type StoreGeneric } from "pinia";
+import { defineStore, getActivePinia, type DefineStoreOptions, type Pinia, type StoreDefinition, type StoreGeneric } from "pinia";
 import { type Ref, ref, type ComputedRef, computed } from "vue";
 import { getAllDescriptors } from "./utils";
 import type { Class, Merge } from "type-fest";
@@ -77,22 +77,26 @@ function transformClass<S extends object>(id: string, storeClass: Class<S>) {
 }
 
 export type SetupStore<S extends object> = StoreDefinition<string, Merge<StateTree<S>, SetupState<S>>, Merge<GettersTree<S>, SetupGetters<S>>, Merge<ActionsTree<S>, SetupActions<S>>>;
+export type DefineSetupOptions<S extends object> = DefineStoreOptions<string, Merge<StateTree<S>, SetupState<S>>, Merge<GettersTree<S>, SetupGetters<S>>, Merge<ActionsTree<S>, SetupActions<S>>>;
 
-export function defineSetupStore<S extends object>(storeClass: Class<S>): SetupStore<S>
+export function defineSetupStore<S extends object>(storeClass: Class<S>, options?: DefineSetupOptions<S>): SetupStore<S>
 
-export function defineSetupStore<S extends object>(id: string, storeClass: Class<S>): SetupStore<S>
+export function defineSetupStore<S extends object>(id: string, storeClass: Class<S>, options?: DefineSetupOptions<S>): SetupStore<S>
 
-export function defineSetupStore<S extends object>(idOrClass: string | Class<S>, _storeClass?: Class<S>) {
+export function defineSetupStore<S extends object>(idOrClass: string | Class<S>, classOrOptions?: Class<S> | DefineSetupOptions<S>, _options?: DefineSetupOptions<S>) {
     let id: string;
     let storeClass: Class<S>;
+    let options: DefineSetupOptions<S> | undefined;
 
     if (typeof idOrClass === 'string') {
         id = idOrClass;
-        storeClass = _storeClass!;
+        storeClass = classOrOptions! as Class<S>;
+        options = _options;
     } else {
         id = idOrClass.name;
         storeClass = idOrClass;
+        options = classOrOptions as DefineSetupOptions<S> | undefined;
     }
 
-    return defineStore(id, () => transformClass(id, storeClass))
+    return defineStore(id, () => transformClass(id, storeClass), options)
 }
