@@ -18,7 +18,6 @@ beforeEach(() => setActivePinia(createPinia()));
 
 type TestingPinia = Pinia & {
   _p: PiniaPlugin[];
-  _s: Map<string, StoreGeneric>;
 };
 
 function getActiveTestingPinia(): TestingPinia {
@@ -224,7 +223,7 @@ describe("Pinia property accessing", () => {
         get f(): number {
           return useContext<Store>(this).$state.count;
         }
-        increasetByPatching() {
+        increaseByPatching() {
           useContext<Store>(this).$patch({ count: this.count + 1 });
         }
       }
@@ -235,7 +234,7 @@ describe("Pinia property accessing", () => {
       const store = useStore();
 
       expect(store.f).toBe(1);
-      store.increasetByPatching();
+      store.increaseByPatching();
       expect(store.f).toBe(2);
     })
   );
