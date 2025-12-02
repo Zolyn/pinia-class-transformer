@@ -111,7 +111,7 @@ class MyStore {
   }
 
   update() {
-    useContext<Store>(this).$patch({ count: 10 });
+    useContext<MyStore>(this).$patch({ count: 10 });
   }
 }
 ```
@@ -126,7 +126,7 @@ import { useGetterContext } from "pinia-class-transformer";
 class MyStore {
   get isLoading(): boolean {
     // Refer to: Fuphoenixes/piniaPluginLoading
-    return useGetterContext<Store>(this).$loading.fetchData;
+    return useGetterContext<MyStore>(this).$loading.fetchData;
   }
 
   async fetchData() {
