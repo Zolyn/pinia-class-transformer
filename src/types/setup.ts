@@ -1,10 +1,10 @@
 import { type ComputedRef, type UnwrapRef } from "vue"
-import type { ActionsTree, DataTree } from "./shared"
+import type { DataTree, MethodTree } from "./shared"
 import type { ConditionalKeys } from "type-fest";
 
 type SetupReturn<S> = S extends { setup(): infer R } ? R : {}
 
-type SetupActions<S> = ActionsTree<SetupReturn<S>>
+type SetupActions<S> = MethodTree<SetupReturn<S>>
 
 type SetupData<S> = DataTree<SetupReturn<S>>;
 

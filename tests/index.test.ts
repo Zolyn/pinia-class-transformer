@@ -299,3 +299,20 @@ describe(
     expect(fn).toHaveBeenCalledTimes(1);
   })
 );
+
+describe(
+  "Setup should not accessible in store",
+  createSharedTest((defineFn) => {
+    class Store {
+      count = 1;
+      setup() {
+        this.count += 1;
+      }
+    }
+
+    const useStore = defineFn(Store);
+    const store = useStore();
+    expect(store.count).toBe(2);
+    expect((store as any).setup).toBeUndefined();
+  })
+);

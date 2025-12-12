@@ -2,7 +2,9 @@ import type { ConditionalPick, ConditionalExcept, ReadonlyKeysOf } from "type-fe
 
 type Method = (...args: any[]) => any;
 
-type ActionsTree<S> = ConditionalPick<S, Method>;
+type MethodTree<S> = ConditionalPick<S, Method>;
+
+type ActionsTree<S> = Omit<MethodTree<S>, 'setup'>;
 
 type DataTree<S> = ConditionalExcept<S, Method>
 
@@ -16,6 +18,7 @@ type GettersTree<S> = {
 
 export type {
     Method,
+    MethodTree,
     ActionsTree,
     DataTree,
     GetterKeys,

@@ -76,8 +76,12 @@ function transformClass<S extends object>(id: string, storeClass: Class<S>) {
     return result
 }
 
-export type SetupStore<S extends object> = StoreDefinition<string, Merge<StateTree<S>, SetupState<S>>, Merge<GettersTree<S>, SetupGetters<S>>, Merge<ActionsTree<S>, SetupActions<S>>>;
-export type DefineSetupOptions<S extends object> = DefineSetupStoreOptions<string, Merge<StateTree<S>, SetupState<S>>, Merge<GettersTree<S>, SetupGetters<S>>, Merge<ActionsTree<S>, SetupActions<S>>>;
+export type MergedStateTree<S> = Merge<StateTree<S>, SetupState<S>>
+export type MergedGettersTree<S> = Merge<GettersTree<S>, SetupGetters<S>>
+export type MergedActionsTree<S> = Merge<ActionsTree<S>, SetupActions<S>>;
+
+export type SetupStore<S extends object> = StoreDefinition<string, MergedStateTree<S>, MergedGettersTree<S>, MergedActionsTree<S>>;
+export type DefineSetupOptions<S extends object> = DefineSetupStoreOptions<string, MergedStateTree<S>, MergedGettersTree<S>, MergedActionsTree<S>>;
 
 export function defineSetupStore<S extends object>(storeClass: Class<S>, options?: DefineSetupOptions<S>): SetupStore<S>
 
