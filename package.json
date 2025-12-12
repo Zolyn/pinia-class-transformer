@@ -32,14 +32,14 @@
     "prepublishOnly": "bun run build"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
-    "bumpp": "^10.3.1",
-    "tsdown": "^0.16.7",
+    "@types/node": "^24.10.3",
+    "bumpp": "^10.3.2",
+    "tsdown": "^0.16.8",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.14"
+    "vitest": "^4.0.15"
   },
   "dependencies": {
-    "type-fest": "^5.2.0"
+    "type-fest": "^5.3.1"
   },
   "peerDependencies": {
     "pinia": "^3.0.4",
