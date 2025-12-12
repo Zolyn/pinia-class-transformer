@@ -88,8 +88,8 @@ export function defineOptionStore<S extends object>(idOrClass: string | Class<S>
         function wrappedUseStore(...args: any[]) {
             const store = useStore(...args);
 
-            if (!(store as any)[SETUP_CALLED]) {
-                (store as any)[SETUP_CALLED] = true;
+            if (!(useStore as any)[SETUP_CALLED]) {
+                (useStore as any)[SETUP_CALLED] = true;
                 setupFn!.call(store);
             }
 
