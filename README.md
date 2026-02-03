@@ -152,8 +152,7 @@ This table might help you make a decision.
 ## Future Improvements
 
 - Call `action` wrapper when pre-assigning actions
-- Possible support for using external stores as state props
-
+  
 ## License
 
 MIT
