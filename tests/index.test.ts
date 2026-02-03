@@ -316,3 +316,32 @@ describe(
     expect((store as any).setup).toBeUndefined();
   })
 );
+
+describe(
+  "External store as state",
+  createSharedTest((defineFn) => {
+    class BaseStore {
+      count = 1;
+    }
+    const useBaseStore = defineFn(BaseStore);
+    const baseStore = useBaseStore();
+    const fn = vi.fn();
+
+    class Store {
+      base = useBaseStore();
+      setup() {
+        watchEffect(() => fn(this.base.count), { flush: "sync" });
+      }
+    }
+
+    const useStore = defineFn(Store);
+    const store = useStore();
+    expect(baseStore.count).toBe(1);
+    expect(store.base.count).toBe(1);
+    expect(fn).toBeCalledTimes(1);
+    baseStore.count++;
+    expect(baseStore.count).toBe(2);
+    expect(store.base.count).toBe(2);
+    expect(fn).toBeCalledTimes(2);
+  })
+);
